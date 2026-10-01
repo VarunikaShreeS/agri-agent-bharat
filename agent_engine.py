@@ -12,7 +12,7 @@ def run_agri_agent(crop_name: str, location: str, symptoms: str, language: str, 
     genai.configure(api_key=active_key)
     
     tool_execution_log = f"""
-    [TOOL ORCHESTRATOR LOG (GEMINI 1.5 FLASH)]
+    [TOOL ORCHESTRATOR LOG (GEMINI PRO)]
     > Initializing Multi-Modal Agent Graph...
     > Context: Crop={crop_name} | Location={location} | Language={language}
     > [✓] Invoking Tool 1: Vision_Crop_Health_Analyzer (Gemini Multi-Modal Engine)
@@ -36,12 +36,11 @@ def run_agri_agent(crop_name: str, location: str, symptoms: str, language: str, 
     4. 🚀 STEP-BY-STEP ACTION PLAN FOR THE FARMER (In simple, encouraging terms).
     """
 
-    # Use gemini-1.5-flash which supports both text and images smoothly
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    # Using the standard Gemini Pro model identifier
+    model = genai.GenerativeModel('gemini-1.5-pro')
 
     contents = [prompt]
     if uploaded_image is not None:
-        # Read image bytes for Gemini PIL/Bytes format
         import PIL.Image
         img = PIL.Image.open(uploaded_image)
         contents.append(img)
