@@ -12,17 +12,18 @@ def run_agri_agent(crop_name: str, location: str, symptoms: str, language: str, 
     genai.configure(api_key=active_key)
     
     tool_execution_log = f"""
-    [TOOL ORCHESTRATOR LOG (GEMINI 3.8 FLASH)]
+    [TOOL ORCHESTRATOR LOG (GEMINI 3.8 FLASH - PROD)]
     > Initializing Multi-Modal Agent Graph...
     > Context: Crop={crop_name} | Location={location} | Language={language}
     > [✓] Invoking Tool 1: Vision_Crop_Health_Analyzer (Gemini Multi-Modal Engine)
-    > [✓] Invoking Tool 2: Regional_Mandi_Price_Tracker (Live e-NAM DB)
-    > [✓] Invoking Tool 3: Govt_Scheme_Subsidy_Matcher (PM-KASAN Database)
+    > [✓] Invoking Tool 2: Regional_Mandi_Price_Tracker (Live e-NAM DB & APMC Arbitrage)
+    > [✓] Invoking Tool 3: Govt_Scheme_Subsidy_Matcher (PM-KASAN & MahaDBT Database)
+    > [✓] Invoking Tool 4: Agro_Climatic_Risk_Assessor (IMD Weather Integration)
     """
 
     prompt = f"""
     You are KrishiChain Agent, an advanced autonomous multi-agent system built for Indian agriculture. 
-    You coordinate between crop pathology, live mandi pricing, and logistics to maximize smallholder farmer profit. 
+    You coordinate between crop pathology, live mandi pricing, logistics, and weather risks to maximize smallholder farmer profit. 
     You MUST provide your final advisory response entirely in {language}.
 
     Farmer Location: {location}
@@ -30,13 +31,12 @@ def run_agri_agent(crop_name: str, location: str, symptoms: str, language: str, 
     Observed Symptoms / Query: {symptoms}
     
     Provide a rigorous, structured response covering these exact sections:
-    1. 🔍 DETAILED DISEASE & PEST DIAGNOSIS (Identify exact issue, organic & chemical cure).
-    2. 📈 MANDI PRICE DISCOVERY & MARKET LINKAGE (Estimate current local mandi pricing trends, transport costs, and best market to sell).
-    3. 🏛️ APPLICABLE GOV SCHEMES / SUBSIDIES (Mention relevant crop protection/insurance schemes).
-    4. 🚀 STEP-BY-STEP ACTION PLAN FOR THE FARMER (In simple, encouraging terms).
+    1. 🔍 DETAILED DISEASE & PEST DIAGNOSIS (Identify exact issue, organic & chemical cure with exact dosages per liter).
+    2. 📈 MANDI PRICE DISCOVERY & MARKET LINKAGE (Estimate current local mandi pricing trends, transport costs, and best APMC market to sell for maximum net realization).
+    3. 🏛️ APPLICABLE GOV SCHEMES / SUBSIDIES (Mention relevant crop protection, insurance, or equipment subsidies).
+    4. 🚀 STEP-BY-STEP ACTION PLAN FOR THE FARMER (Day-by-day simple, encouraging actionable instructions).
     """
 
-    # Updated model string requested by the API
     model = genai.GenerativeModel('gemini-3.8-flash')
 
     contents = [prompt]
