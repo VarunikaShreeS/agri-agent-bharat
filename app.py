@@ -239,6 +239,8 @@ if res_data:
     # Guardrail check banner
     if d and d.get("low_confidence"):
         st.warning("⚠️ **Low Confidence Guardrail Fired**: Photo is unclear or non-leaf. Chemical remedies have been blocked. Please consult your local KVK.")
+    elif d and d.get("severity", 0) >= 0.7:
+        st.warning("⚠️ **Severe Infection Alert**: Infection severity is high (≥70%). Please consult your nearest Krishi Vigyan Kendra (KVK) immediately.")
 
     # 3. SPOKEN AUDIO ADVISORY (TTS)
     st.markdown("### 🔊 Regional Audio Advisory")

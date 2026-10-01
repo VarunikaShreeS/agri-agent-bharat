@@ -46,6 +46,32 @@ RUNS = [
 ]
 
 def main():
+    audio_only = "--audio-only" in sys.argv
+    if audio_only:
+        print("Regenerating spoken summaries and audio only (no Gemini calls)...")
+        for r in RUNS:
+            json_path = CACHE_DIR / f"{r['id']}.json"
+            if not json_path.exists():
+                print(f"  Warning: {json_path} not found, skipping.")
+                continue
+            data = json.loads(json_path.read_text(encoding="utf-8"))
+            print(f"\nProcessing {data.get('title', r['id'])} (Audio Only)...")
+            
+            spoken_sum = build_spoken_summary(data.get("diagnosis", {}), data.get("plan", {}), language=data.get("language", "English"))
+            audio_bytes = generate_speech(spoken_sum, language_label=data.get("language", "English"))
+            
+            audio_filename = data.get("audio_file", f"{r['id']}.mp3")
+            audio_path = CACHE_DIR / audio_filename
+            if audio_bytes:
+                audio_path.write_bytes(audio_bytes)
+                print(f"  Saved audio to {audio_path} ({len(audio_bytes)} bytes)")
+            
+            data["spoken_summary"] = spoken_sum
+            json_path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+            print(f"  Updated run data in {json_path}")
+        print("\nAll demo cache audio and spoken summaries updated successfully!")
+        return
+
     print("Building demo cache for offline DEMO_MODE=1...")
     for r in RUNS:
         print(f"\nProcessing {r['title']}...")

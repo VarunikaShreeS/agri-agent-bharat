@@ -66,6 +66,105 @@ class TestRobustnessAndGuardrails(unittest.TestCase):
             self.assertIn("answer", data)
             self.assertIn("plan", data)
 
+    def test_s1_marginal_summary_no_best_market_or_gain_en(self):
+        """S1: Marginal plan spoken summary in EN contains no 'best market' or 'gain'."""
+        from voice.tts import build_spoken_summary
+        diagnosis = {"image_available": True, "disease": "early_blight", "severity": 0.2}
+        plan = {
+            "ok": True,
+            "recommendation": "marginal",
+            "best": {"market": "APMC Panvel", "net": 41254.0},
+            "local_baseline": {"market": "APMC Ghoti", "net": 40860.0},
+            "uplift_inr_vs_local": 394.0,
+            "uplift_pct_vs_local": 0.96,
+            "is_synthetic": False
+        }
+        summary = build_spoken_summary(diagnosis, plan, language="English")
+        self.assertNotIn("best market", summary.lower())
+        self.assertNotIn("gain", summary.lower())
+        self.assertIn("roughly break-even", summary)
+        self.assertIn("lower risk", summary)
+
+    def test_s2_synthetic_plan_summary_disclaimer(self):
+        """S2: Synthetic plan summary contains the disclaimer in EN, HI, and TA."""
+        from voice.tts import build_spoken_summary
+        diagnosis = {"image_available": True, "disease": "early_blight", "severity": 0.2}
+        plan = {
+            "ok": True,
+            "recommendation": "travel",
+            "best": {"market": "APMC Panvel", "net": 41254.0},
+            "local_baseline": {"market": "APMC Ghoti", "net": 40860.0},
+            "uplift_inr_vs_local": 394.0,
+            "uplift_pct_vs_local": 0.96,
+            "is_synthetic": True
+        }
+        en_sum = build_spoken_summary(diagnosis, plan, language="English")
+        hi_sum = build_spoken_summary(diagnosis, plan, language="Hindi")
+        ta_sum = build_spoken_summary(diagnosis, plan, language="Tamil")
+
+        self.assertTrue(en_sum.startswith("This is sample data, not live prices."))
+        self.assertTrue(hi_sum.startswith("यह केवल नमूना डेटा है, वास्तविक दरें नहीं।"))
+        self.assertTrue(ta_sum.startswith("இது மாதிரி தரவு மட்டுமே, நேரடி விலை அல்ல."))
+
+    def test_s3_numeric_grounding_in_spoken_summaries(self):
+        """S3: Every number in each demo cache summary is grounded in the plan/diagnosis."""
+        import re
+        cache_dir = pathlib.Path("demo_cache")
+        required_runs = ["tomato_early_blight_en", "tomato_leaf_curl_hi", "tomato_tamil_run"]
+        for r_id in required_runs:
+            json_file = cache_dir / f"{r_id}.json"
+            data = json.loads(json_file.read_text(encoding="utf-8"))
+            summary = data["spoken_summary"]
+            # Extract numbers from summary
+            raw_nums = re.findall(r"[\d,]+(?:\.\d+)?", summary)
+            nums = [float(n.replace(",", "")) for n in raw_nums if n.replace(",", "")]
+            
+            # Grounding sources: plan, diagnosis, standard timing horizon (3 days)
+            plan = data.get("plan", {})
+            diag = data.get("diagnosis", {})
+            
+            allowed_nums = {3.0}  # standard 3-day action window
+            if diag:
+                allowed_nums.add(round(float(diag.get("severity", 0) * 100), 1))
+                allowed_nums.add(float(diag.get("severity", 0)))
+            if plan:
+                allowed_nums.add(float(plan.get("uplift_inr_vs_local", 0)))
+                allowed_nums.add(round(float(plan.get("uplift_pct_vs_local", 0)), 2))
+                allowed_nums.add(float(plan.get("quantity_quintals", 0)))
+                if "best" in plan:
+                    allowed_nums.add(float(plan["best"].get("net", 0)))
+                    allowed_nums.add(float(plan["best"].get("price_per_quintal", 0)))
+                if "local_baseline" in plan:
+                    allowed_nums.add(float(plan["local_baseline"].get("net", 0)))
+                    allowed_nums.add(float(plan["local_baseline"].get("price_per_quintal", 0)))
+            
+            for n in nums:
+                self.assertTrue(
+                    any(abs(n - a) < 0.01 for a in allowed_nums),
+                    f"Number {n} in summary '{summary}' of {r_id} not grounded in plan {allowed_nums}"
+                )
+
+    def test_marginal_demo_cache_advisory_text_policy(self):
+        """For every demo cache file with recommendation == 'marginal', the full 'answer' text must match marginal policy."""
+        cache_dir = pathlib.Path("demo_cache")
+        for f in cache_dir.glob("*.json"):
+            data = json.loads(f.read_text(encoding="utf-8"))
+            rec = data.get("plan", {}).get("recommendation")
+            if rec == "marginal":
+                answer = data.get("answer", "")
+                lang = data.get("language", "")
+                if "english" in lang.lower():
+                    self.assertNotIn("best market", answer.lower(), f"Found 'best market' in {f.name}")
+                    self.assertNotIn("sell at the best net-return market", answer.lower(), f"Found 'sell at the best net-return market' in {f.name}")
+                    self.assertIn("break-even", answer.lower(), f"Expected break-even in {f.name}")
+                    self.assertIn("lower risk", answer.lower(), f"Expected lower risk in {f.name}")
+                elif "hindi" in lang.lower():
+                    self.assertNotIn("सर्वोत्तम मंडी", answer, f"Found 'सर्वोत्तम मंडी' in {f.name}")
+                    self.assertNotIn("सबसे अच्छा विकल्प", answer, f"Found 'सबसे अच्छा विकल्प' in {f.name}")
+                    self.assertNotIn("अधिक लाभ", answer, f"Found 'अधिक लाभ' in {f.name}")
+                    self.assertIn("बराबर", answer, f"Expected बराबर in {f.name}")
+                    self.assertIn("कम जोखिम", answer, f"Expected कम जोखिम in {f.name}")
+
 
 if __name__ == "__main__":
     unittest.main()

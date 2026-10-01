@@ -6,8 +6,8 @@
   "quantity_quintals": 20.0,
   "query": "Leaves have dark concentric rings and yellow halos. What should I spray and where should I sell?",
   "language": "English",
-  "answer": "Hello! Don't worry, we can help you with your tomato crop.\n\n### Diagnosis\nYour tomato leaves show symptoms of **Early Blight (Alternaria solani)**, with dark brown spots that have concentric rings and yellow halos. The severity is currently mild, at 15%.\n\n### Treatment\n\nHere are the recommended treatments, with organic options first:\n\n**Organic Options:**\n*   **Remove affected leaves:** Carefully remove and destroy the lower leaves that show symptoms.\n*   **Spray:** You can spray **Trichoderma viride** at 5 grams per litre of water, or **neem oil** at 3 ml per litre of water, along with a sticky spreader.\n*   **Copper oxychloride:** You can also use Copper oxychloride at 3 grams per litre of water, which is often accepted in organic-leaning plans.\n\n**Chemical Options:**\n*   **Mancozeb 75% WP:** Spray 2.5 grams per litre of water.\n*   **Chlorothalonil 75% WP:** Spray 2 grams per litre of water.\n\nFor both chemical options, the spray interval is every 10 days. The **Pre-Harvest Interval (PHI)** for these treatments is 7 days, meaning you should not harvest your tomatoes for at least 7 days after spraying.\n\n**Important:** Always follow the label dose, wear protective gear, and confirm with your local Krishi Vigyan Kendra (KVK).\n\n### Where to sell\nBased on live market data as of 2026-09-24, here is the best plan for selling your 20 quintals of tomatoes:\n\nYour best option is to sell at **APMC Panvel in Raigad, Maharashtra**.\n*   **Net earnings:** You could earn approximately **₹41,254**.\n*   **Uplift:** This is an uplift of **₹394** compared to selling at your local APMC Ghoti in Nashik.\n*   **Price per quintal:** The price at APMC Panvel is ₹2750 per quintal.\n\nYour local APMC Ghoti in Nashik offers ₹2100 per quintal, with an estimated net earning of ₹40,860.\n\n### Next 3 days\nGiven the moderate signals, it is best to **sell your crop at the best net-return market (APMC Panvel)** and continue treating the remaining crop to prevent further spread of the disease.",
-  "spoken_summary": "Your crop has been diagnosed with Early Blight at 15% severity. Apply organic treatments first and observe pre-harvest safety intervals. The best market to sell is APMC Panvel with estimated net earnings of ₹41,254, providing a gain of ₹394 over your local mandi. Execute your harvest and sales plan within the next 3 days.",
+  "answer": "Here is an advisory for your tomato crop:\n\n**Diagnosis**\nBased on the image and your description of dark concentric rings and yellow halos on the leaves, your tomato crop appears to have **Early Blight (Alternaria solani)**. The severity is estimated to be low, at 15%.\n\n**Treatment**\nHere are the recommended treatments for Early Blight, with organic options presented first:\n\n*   **Organic Options:**\n    *   Remove and destroy any affected lower leaves to prevent the disease from spreading further.\n    *   Spray **Trichoderma viride** at a dose of 5 grams per liter of water, or **neem oil** at 3 ml per liter of water, along with a sticky spreader.\n    *   **Copper oxychloride** at 3 grams per liter of water can also be used, which is accepted in organic-leaning plans.\n*   **Chemical Options:**\n    *   You can spray **Mancozeb 75% WP** at a dose of 2.5 grams per liter of water. The spray interval is 10 days.\n    *   Alternatively, **Chlorothalonil 75% WP** can be used at a dose of 2 grams per liter of water, also with a 10-day spray interval.\n*   **Pre-Harvest Interval (PHI):** For all treatments, please observe a pre-harvest interval of **7 days**. This means you should not harvest your tomatoes for 7 days after the last spray.\n*   **Cultural Practices:**\n    *   Avoid overhead irrigation to reduce leaf wetness, which can encourage disease.\n    *   Stake your plants to improve air circulation around them.\n    *   For your next planting season, rotate your crops away from other solanaceous plants (like potatoes, peppers, eggplant) to help break the disease cycle.\n*   **Safety:** Always follow the label dose, wear appropriate protective gear, and observe the pre-harvest interval. It is always a good idea to confirm with your local Krishi Vigyan Kendra (KVK) for specific local advice.\n\n**Where to sell**\nBased on live mandi prices as of 2026-09-24, here is the market assessment for selling your 20 quintals of tomatoes:\n\n*   **Market Analysis:** Selling at APMC Panvel in Raigad (₹41,254 net) vs local APMC Ghoti in Nashik (₹40,860 net) is roughly break-even (+0.96%, ₹394 difference).\n*   **Recommendation:** Selling at your local mandi is lower risk after accounting for transport costs and price uncertainty.\n*   **Price per Quintal:** The price at APMC Panvel is ₹2750 per quintal, compared to ₹2100 per quintal at APMC Ghoti.\n\n**Next 3 days**\nFocus on applying the recommended organic treatments promptly. If you choose chemical options, ensure you follow the dosage and safety guidelines. Prepare your 20 quintals of tomatoes for sale and plan to sell at your local mandi to avoid unnecessary long-distance transport risks. Continue to monitor your crop for any further disease spread.",
+  "spoken_summary": "Your crop has been diagnosed with Early Blight at 15% severity. Apply organic treatments first and observe pre-harvest safety intervals. Selling at APMC Panvel is roughly break-even (+0.96%). Selling at your local mandi is lower risk. Execute your harvest and sales plan within the next 3 days.",
   "audio_file": "tomato_early_blight_en.mp3",
   "diagnosis": {
     "image_available": true,
@@ -15,7 +15,7 @@
     "disease": "early_blight",
     "severity": 0.15,
     "confidence": 0.95,
-    "visible_symptoms": "Multiple dark brown, necrotic spots with concentric rings and yellow halos are visible on the tomato leaves.",
+    "visible_symptoms": "Dark brown, necrotic spots with concentric rings and yellow halos are visible on the leaves.",
     "low_confidence": false
   },
   "plan": {
@@ -29,9 +29,13 @@
       "state": "Maharashtra",
       "distance_km": 229.7,
       "price_per_quintal": 2750.0,
-      "trend_7d_pct": 0.0,
+      "trend_pct": 0.0,
+      "trend_span_days": 7,
       "source": "live_mandi_api",
+      "data_tier": "live_mandi_api",
       "as_of": "2026-09-24",
+      "price_date": "2026-09-24",
+      "is_synthetic": false,
       "gross": 55000.0,
       "freight": 9188.0,
       "commission": 1100.0,
@@ -45,9 +49,13 @@
       "state": "Maharashtra",
       "distance_km": 0.0,
       "price_per_quintal": 2100.0,
-      "trend_7d_pct": 0.0,
+      "trend_pct": 0.0,
+      "trend_span_days": 2,
       "source": "live_mandi_api",
+      "data_tier": "live_mandi_api",
       "as_of": "2026-09-24",
+      "price_date": "2026-09-24",
+      "is_synthetic": false,
       "gross": 42000.0,
       "freight": 0.0,
       "commission": 840.0,
@@ -62,9 +70,13 @@
         "state": "Maharashtra",
         "distance_km": 229.7,
         "price_per_quintal": 2750.0,
-        "trend_7d_pct": 0.0,
+        "trend_pct": 0.0,
+        "trend_span_days": 7,
         "source": "live_mandi_api",
+        "data_tier": "live_mandi_api",
         "as_of": "2026-09-24",
+        "price_date": "2026-09-24",
+        "is_synthetic": false,
         "gross": 55000.0,
         "freight": 9188.0,
         "commission": 1100.0,
@@ -78,9 +90,13 @@
         "state": "Maharashtra",
         "distance_km": 0.0,
         "price_per_quintal": 2100.0,
-        "trend_7d_pct": 0.0,
+        "trend_pct": 0.0,
+        "trend_span_days": 2,
         "source": "live_mandi_api",
+        "data_tier": "live_mandi_api",
         "as_of": "2026-09-24",
+        "price_date": "2026-09-24",
+        "is_synthetic": false,
         "gross": 42000.0,
         "freight": 0.0,
         "commission": 840.0,
@@ -94,9 +110,13 @@
         "state": "Maharashtra",
         "distance_km": 182.2,
         "price_per_quintal": 2250.0,
-        "trend_7d_pct": -10.0,
+        "trend_pct": -10.0,
+        "trend_span_days": 7,
         "source": "live_mandi_api",
+        "data_tier": "live_mandi_api",
         "as_of": "2026-09-24",
+        "price_date": "2026-09-24",
+        "is_synthetic": false,
         "gross": 45000.0,
         "freight": 7288.0,
         "commission": 900.0,
@@ -105,19 +125,55 @@
         "net": 34462.0
       }
     ],
+    "excluded_stale": [],
     "uplift_inr_vs_local": 394.0,
-    "uplift_pct_vs_local": 1.0,
+    "uplift_pct_vs_local": 0.96,
+    "recommendation": "marginal",
+    "break_even_freight_inr_per_qtl_km": 2.085764040052242,
+    "sensitivity": [
+      {
+        "label": "freight_x0.75",
+        "uplift_inr": 2691.0
+      },
+      {
+        "label": "freight_x1.0",
+        "uplift_inr": 394.0
+      },
+      {
+        "label": "freight_x1.25",
+        "uplift_inr": -1903.0
+      },
+      {
+        "label": "remote_price_x0.9",
+        "uplift_inr": -4681.0
+      },
+      {
+        "label": "grade_discount_5pct_both",
+        "uplift_inr": -85.0
+      },
+      {
+        "label": "grade_discount_10pct_both",
+        "uplift_inr": -565.0
+      }
+    ],
     "timing": {
       "action": "sell_at_best_market",
       "reason": "Moderate/unclear signals; sell at the best net-return market and treat remaining crop."
     },
+    "is_synthetic": false,
     "assumptions": {
+      "severity": 0.15,
+      "severity_in_net": false,
       "road_factor": 1.3,
       "freight_rs_per_qtl_km": 2.0,
-      "commission_pct": 2.0
+      "commission_pct": 2.0,
+      "loading_rs_per_qtl": 15.0,
+      "spoilage_pct_per_100km": 2.5
     },
     "data_source": "live_mandi_api",
+    "data_tier": "live_mandi_api",
     "data_as_of": "2026-09-24",
+    "price_date": "2026-09-24",
     "provider_log": [
       {
         "provider": "live_mandi_api",
@@ -134,8 +190,8 @@
         "crop": "Tomato"
       },
       "status": "ok",
-      "latency_s": 6.01,
-      "result_preview": "{\"image_available\": true, \"crop\": \"Tomato\", \"disease\": \"early_blight\", \"severity\": 0.15, \"confidence\": 0.95, \"visible_symptoms\": \"Multiple dark brown, necrotic spots with concentric rings and yellow halos are visible on the tomato leaves.\", \"low_confidence\": false}"
+      "latency_s": 5.59,
+      "result_preview": "{\"image_available\": true, \"crop\": \"Tomato\", \"disease\": \"early_blight\", \"severity\": 0.15, \"confidence\": 0.95, \"visible_symptoms\": \"Dark brown, necrotic spots with concentric rings and yellow halos are visible on the leaves.\", \"low_confidence\": false}"
     },
     {
       "step": 2,
@@ -158,8 +214,8 @@
         "severity": 0.15
       },
       "status": "ok",
-      "latency_s": 2.88,
-      "result_preview": "{\"ok\": true, \"crop\": \"Tomato\", \"quantity_quintals\": 20, \"home\": \"Nashik, Maharashtra\", \"best\": {\"market\": \"APMC Panvel\", \"district\": \"Raigad\", \"state\": \"Maharashtra\", \"distance_km\": 229.7, \"price_per_quintal\": 2750.0, \"trend_7d_pct\": 0.0, \"source\": \"live_mandi_api\", \"as_of\": \"2026-09-24\", \"gross\": 55000.0, \"freight\": 9188.0, \"commission\": 1100.0, \"loading\": 300.0, \"spoilage_loss\": 3158.0, \"net\": 41254.0}, \"local_baseline\": {\"market\": \"APMC Ghoti\", \"district\": \"Nashik\", \"state\": \"Maharashtra\", \"distance_km\": 0.0, \"price_per_quintal\": 2100.0, \"trend_7d_pct\": 0.0, \"source\": \"live_mandi_api\", \"as_"
+      "latency_s": 1.09,
+      "result_preview": "{\"ok\": true, \"crop\": \"Tomato\", \"quantity_quintals\": 20, \"home\": \"Nashik, Maharashtra\", \"best\": {\"market\": \"APMC Panvel\", \"district\": \"Raigad\", \"state\": \"Maharashtra\", \"distance_km\": 229.7, \"price_per_quintal\": 2750.0, \"trend_pct\": 0.0, \"trend_span_days\": 7, \"source\": \"live_mandi_api\", \"data_tier\": \"live_mandi_api\", \"as_of\": \"2026-09-24\", \"price_date\": \"2026-09-24\", \"is_synthetic\": false, \"gross\": 55000.0, \"freight\": 9188.0, \"commission\": 1100.0, \"loading\": 300.0, \"spoilage_loss\": 3158.0, \"net\": 41254.0}, \"local_baseline\": {\"market\": \"APMC Ghoti\", \"district\": \"Nashik\", \"state\": \"Maharashtra\", \""
     }
   ],
   "model": "gemini-2.5-flash",
