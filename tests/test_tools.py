@@ -21,7 +21,7 @@ def test_plan_nashik_tomato():
     p = planner.build_sell_plan("Tomato", 20, "Nashik, Maharashtra", 0.4)
     assert p["ok"] and p["best"]["net"] >= p["local_baseline"]["net"]
     assert all(o["distance_km"] <= planner.MAX_RADIUS_KM for o in p["top_options"])
-    assert p["data_source"] == "seeded_snapshot"
+    assert p["data_source"] in ("live_mandi_api", "live_agmarknet", "frozen_real", "seeded_snapshot")
 
 
 def test_plan_recovers_on_unknown_district():

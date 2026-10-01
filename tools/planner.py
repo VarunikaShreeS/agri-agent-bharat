@@ -8,22 +8,22 @@ def build_sell_plan(crop: str, quantity_quintals: float, home_district: str, sev
     home = mandi.resolve_home(home_district)
     if not home:
         return {"ok": False, "error": f"Could not locate '{home_district}'.", "known_districts": mandi.known_districts()}
-    rows = mandi.get_market_rows(crop)
+    rows = mandi.get_market_rows(crop, home_state=home.get("state", "Maharashtra"))
     if not rows:
-        return {"ok": False, "error": f"No price data for crop '{crop}'."}
+        return {"ok": False, "error": f"No price data for crop '{crop}'.", "provider_log": mandi.get_last_provider_log()}
     options = []
     for r in rows:
-        km = 0.0 if (r["district"] == home["district"] and r["state"] == home["state"]) else \
+        km = 0.0 if (r["district"].lower() == home["district"].lower() and r["state"].lower() == home["state"].lower()) else \
             logistics.road_km(home["lat"], home["lon"], r["lat"], r["lon"])
         if km > MAX_RADIUS_KM:
             continue
         money = optimizer.net_realization(crop, r["modal_price"], quantity_quintals, km)
         options.append({"market": r["market"], "district": r["district"], "state": r["state"],
                         "distance_km": km, "price_per_quintal": r["modal_price"],
-                        "trend_7d_pct": optimizer.trend_pct(r["history_7d"]),
+                        "trend_7d_pct": optimizer.trend_pct(r.get("history_7d")),
                         "source": r["source"], "as_of": r["as_of"], **money})
     if not options:
-        return {"ok": False, "error": "No markets within range."}
+        return {"ok": False, "error": "No markets within range.", "provider_log": mandi.get_last_provider_log()}
     options.sort(key=lambda o: o["net"], reverse=True)
     local = min(options, key=lambda o: o["distance_km"])
     best = options[0]
@@ -36,4 +36,5 @@ def build_sell_plan(crop: str, quantity_quintals: float, home_district: str, sev
             "timing": optimizer.timing_advice(severity, best["trend_7d_pct"]),
             "assumptions": {"road_factor": logistics.ROAD_FACTOR, "freight_rs_per_qtl_km": logistics.FREIGHT_PER_QTL_KM,
                             "commission_pct": logistics.COMMISSION_PCT},
-            "data_source": best["source"], "data_as_of": best["as_of"]}
+            "data_source": best["source"], "data_as_of": best["as_of"],
+            "provider_log": mandi.get_last_provider_log()}

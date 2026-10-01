@@ -1,0 +1,322 @@
+{
+ "source": "seeded_snapshot",
+ "as_of": "2026-10-01",
+ "disclaimer": "ILLUSTRATIVE seed data in Agmarknet format (Rs/quintal modal price). NOT live market data. Replace via data.gov.in adapter.",
+ "markets": [
+  {
+   "market": "Nashik APMC",
+   "district": "Nashik",
+   "state": "Maharashtra",
+   "lat": 19.9975,
+   "lon": 73.7898,
+   "prices": {
+    "Tomato": [
+     1450,
+     1480,
+     1500,
+     1520,
+     1560,
+     1600,
+     1640
+    ],
+    "Onion": [
+     1750,
+     1760,
+     1740,
+     1780,
+     1790,
+     1800,
+     1820
+    ]
+   }
+  },
+  {
+   "market": "Lasalgaon APMC",
+   "district": "Nashik",
+   "state": "Maharashtra",
+   "lat": 20.14,
+   "lon": 74.23,
+   "prices": {
+    "Onion": [
+     1850,
+     1870,
+     1880,
+     1900,
+     1920,
+     1940,
+     1960
+    ]
+   }
+  },
+  {
+   "market": "Pune APMC",
+   "district": "Pune",
+   "state": "Maharashtra",
+   "lat": 18.5204,
+   "lon": 73.8567,
+   "prices": {
+    "Tomato": [
+     1750,
+     1760,
+     1800,
+     1820,
+     1850,
+     1880,
+     1900
+    ],
+    "Onion": [
+     1900,
+     1920,
+     1900,
+     1950,
+     1980,
+     2000,
+     2010
+    ]
+   }
+  },
+  {
+   "market": "Vashi (Navi Mumbai) APMC",
+   "district": "Thane",
+   "state": "Maharashtra",
+   "lat": 19.076,
+   "lon": 73.0,
+   "prices": {
+    "Tomato": [
+     1950,
+     2000,
+     2050,
+     2100,
+     2150,
+     2200,
+     2250
+    ],
+    "Onion": [
+     2000,
+     2020,
+     2050,
+     2080,
+     2100,
+     2120,
+     2150
+    ]
+   }
+  },
+  {
+   "market": "Ahmednagar APMC",
+   "district": "Ahmednagar",
+   "state": "Maharashtra",
+   "lat": 19.0948,
+   "lon": 74.748,
+   "prices": {
+    "Tomato": [
+     1400,
+     1420,
+     1450,
+     1450,
+     1480,
+     1500,
+     1520
+    ],
+    "Onion": [
+     1700,
+     1720,
+     1710,
+     1730,
+     1750,
+     1760,
+     1770
+    ]
+   }
+  },
+  {
+   "market": "Dhule APMC",
+   "district": "Dhule",
+   "state": "Maharashtra",
+   "lat": 20.9042,
+   "lon": 74.7749,
+   "prices": {
+    "Tomato": [
+     1300,
+     1320,
+     1340,
+     1350,
+     1350,
+     1380,
+     1400
+    ],
+    "Onion": [
+     1650,
+     1660,
+     1670,
+     1680,
+     1690,
+     1700,
+     1710
+    ]
+   }
+  },
+  {
+   "market": "Chhatrapati Sambhajinagar APMC",
+   "district": "Aurangabad",
+   "state": "Maharashtra",
+   "lat": 19.8762,
+   "lon": 75.3433,
+   "prices": {
+    "Tomato": [
+     1500,
+     1520,
+     1560,
+     1580,
+     1600,
+     1620,
+     1650
+    ],
+    "Onion": [
+     1780,
+     1800,
+     1800,
+     1820,
+     1840,
+     1850,
+     1870
+    ]
+   }
+  },
+  {
+   "market": "Koyambedu Market",
+   "district": "Chennai",
+   "state": "Tamil Nadu",
+   "lat": 13.0694,
+   "lon": 80.1948,
+   "prices": {
+    "Tomato": [
+     2400,
+     2450,
+     2500,
+     2550,
+     2600,
+     2700,
+     2800
+    ],
+    "Onion": [
+     2200,
+     2220,
+     2250,
+     2280,
+     2300,
+     2320,
+     2350
+    ]
+   }
+  },
+  {
+   "market": "Coimbatore Market",
+   "district": "Coimbatore",
+   "state": "Tamil Nadu",
+   "lat": 11.0168,
+   "lon": 76.9558,
+   "prices": {
+    "Tomato": [
+     2300,
+     2350,
+     2380,
+     2400,
+     2450,
+     2500,
+     2550
+    ],
+    "Onion": [
+     2150,
+     2170,
+     2200,
+     2200,
+     2230,
+     2250,
+     2280
+    ]
+   }
+  },
+  {
+   "market": "Salem Uzhavar Sandhai",
+   "district": "Salem",
+   "state": "Tamil Nadu",
+   "lat": 11.6643,
+   "lon": 78.146,
+   "prices": {
+    "Tomato": [
+     2100,
+     2150,
+     2200,
+     2250,
+     2250,
+     2300,
+     2350
+    ],
+    "Onion": [
+     2000,
+     2030,
+     2050,
+     2070,
+     2100,
+     2100,
+     2130
+    ]
+   }
+  },
+  {
+   "market": "Krishnagiri Market",
+   "district": "Krishnagiri",
+   "state": "Tamil Nadu",
+   "lat": 12.5266,
+   "lon": 78.2138,
+   "prices": {
+    "Tomato": [
+     2000,
+     2050,
+     2100,
+     2100,
+     2150,
+     2200,
+     2250
+    ],
+    "Onion": [
+     1950,
+     1970,
+     2000,
+     2020,
+     2040,
+     2060,
+     2080
+    ]
+   }
+  },
+  {
+   "market": "Vellore Market",
+   "district": "Vellore",
+   "state": "Tamil Nadu",
+   "lat": 12.9165,
+   "lon": 79.1325,
+   "prices": {
+    "Tomato": [
+     2200,
+     2250,
+     2300,
+     2350,
+     2400,
+     2450,
+     2500
+    ],
+    "Onion": [
+     2050,
+     2080,
+     2100,
+     2120,
+     2150,
+     2170,
+     2200
+    ]
+   }
+  }
+ ]
+}

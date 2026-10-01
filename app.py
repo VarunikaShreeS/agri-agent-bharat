@@ -11,7 +11,7 @@ st.sidebar.title("⚙️ Settings")
 key = st.sidebar.text_input("Gemini API key (optional if set in .env)", type="password")
 language = st.sidebar.selectbox("Advisory language", ["English", "Hindi (हिंदी)", "Marathi (मराठी)", "Telugu (తెలుగు)", "Tamil (தமிழ்)", "Punjabi (ਪੰਜਾਬੀ)"])
 st.sidebar.caption(f"Model: `{MODEL}`")
-st.sidebar.caption("Live prices: " + ("on (data.gov.in key found)" if os.getenv("DATA_GOV_API_KEY") else "off — using seeded snapshot"))
+st.sidebar.caption("Price engine: 🟢 Live Mandi API / 🔵 Frozen Real / 🟡 Seed fallback")
 
 st.title("🌾 KrishiChain Agent")
 st.caption("Photo + question → diagnosis → treatment → best mandi by NET rupees, in your language.")
@@ -48,10 +48,20 @@ if go:
     if p:
         m[2].metric("Best market (net)", p["best"]["market"], f'₹{p["best"]["net"]:,.0f}')
         m[3].metric("Gain vs local mandi", f'₹{p["uplift_inr_vs_local"]:,.0f}', f'{p["uplift_pct_vs_local"]}%')
-        badge = "🟢 LIVE" if p["data_source"] == "live_agmarknet" else "🟡 CACHED / SEEDED SNAPSHOT"
-        st.caption(f'Price data: {badge} · as of {p["data_as_of"]} · transport, commission & spoilage deducted')
+        
+        src = p.get("data_source", "seeded_snapshot")
+        as_of = p.get("data_as_of", "recent")
+        if src == "live_mandi_api":
+            badge = f"🟢 LIVE (Mandi Price API, {as_of})"
+        elif src == "live_agmarknet":
+            badge = f"🟢 LIVE (data.gov.in, {as_of})"
+        elif src == "frozen_real":
+            badge = f"🔵 FROZEN REAL ({as_of})"
+        else:
+            badge = f"🟡 SEED ({as_of} illustrative)"
+        st.caption(f'Price data: **{badge}** · transport, commission & spoilage deducted')
         st.dataframe([{"Market": o["market"], "Distance km": o["distance_km"], "₹/qtl": o["price_per_quintal"],
-                       "7d trend %": o["trend_7d_pct"], "Freight ₹": o["freight"], "Net ₹": o["net"]}
+                       "7d trend %": f'{o["trend_7d_pct"]}%' if o.get("trend_7d_pct") is not None else "N/A", "Freight ₹": o["freight"], "Net ₹": o["net"]}
                       for o in p["top_options"]], use_container_width=True, hide_index=True)
 
     with st.expander(f"🔍 Agent trace — {len(res.trace)} real tool calls", expanded=True):

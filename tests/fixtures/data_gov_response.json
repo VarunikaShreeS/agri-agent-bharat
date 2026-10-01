@@ -1,0 +1,49 @@
+{
+  "index_name": "9ef84268-d588-465a-a308-a864a43d0070",
+  "title": "Daily Mandi Prices",
+  "desc": "Agmarknet daily market prices",
+  "org_type": "Central",
+  "org": ["Ministry of Agriculture and Farmers Welfare"],
+  "total": 3,
+  "count": 3,
+  "limit": "10",
+  "offset": "0",
+  "records": [
+    {
+      "state": "Maharashtra",
+      "district": "Nashik",
+      "market": "Nashik",
+      "commodity": "Tomato",
+      "variety": "Local",
+      "grade": "FAQ",
+      "arrival_date": "24/09/2026",
+      "min_price": "1200",
+      "max_price": "1800",
+      "modal_price": "1550"
+    },
+    {
+      "state": "Maharashtra",
+      "district": "Pune",
+      "market": "Pune",
+      "commodity": "Tomato",
+      "variety": "Local",
+      "grade": "FAQ",
+      "arrival_date": "24/09/2026",
+      "min_price": "1400",
+      "max_price": "2000",
+      "modal_price": "1750"
+    },
+    {
+      "state": "Maharashtra",
+      "district": "Thane",
+      "market": "Vashi",
+      "commodity": "Tomato",
+      "variety": "Hybrid",
+      "grade": "FAQ",
+      "arrival_date": "24/09/2026",
+      "min_price": "1800",
+      "max_price": "2400",
+      "modal_price": "2100"
+    }
+  ]
+}

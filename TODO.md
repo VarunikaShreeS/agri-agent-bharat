@@ -38,11 +38,11 @@
 
 ## Phase 2 — Data realism (target: by 2:30 PM)
 **Spec:** Replace guesswork with real, labeled data where possible.
-- [ ] Register free data.gov.in key; set `DATA_GOV_API_KEY`; verify the Agmarknet resource ID and field names
-- [ ] Live overlay works; UI badge shows 🟢 LIVE; falls back to 🟡 snapshot on failure (test by unsetting key)
-- [ ] Extend `data/kb.json` to 5-6 diseases per crop with source citations (TNAU/ICAR); mark doses "verify with KVK"
-- [ ] Add mandi coords for the districts of the demo scenario (include one Tamil Nadu demo path)
-- [ ] **Accept:** one run shows live price source (or documented fallback); KB entries all carry a `source` field
+- [x] Register free data.gov.in key; set `DATA_GOV_API_KEY`; verify the Agmarknet resource ID and field names
+- [x] Live overlay works; UI badge shows 🟢 LIVE; falls back to 🟡 snapshot on failure (test by unsetting key)
+- [x] Extend `data/kb.json` to 5-6 diseases per crop with source citations (TNAU/ICAR); mark doses "verify with KVK"
+- [x] Add mandi coords for the districts of the demo scenario (include one Tamil Nadu demo path)
+- [x] **Accept:** one run shows live price source (or documented fallback); KB entries all carry a `source` field
 
 ## Phase 3 — Voice & multilingual (target: by 4:00 PM, MIDPOINT)
 **Spec:** Farmer can speak or type in a regional language and hear the answer.

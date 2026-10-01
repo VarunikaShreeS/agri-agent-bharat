@@ -1,0 +1,1234 @@
+{
+  "source": "frozen_real",
+  "as_of": "2026-09-24",
+  "frozen_on": "2026-10-01",
+  "disclaimer": "Real Agmarknet wholesale data frozen from Mandi Price API (https://mandi-api.onrender.com). Approximate district centroids used for distances.",
+  "market_count": 71,
+  "markets": [
+    {
+      "market": "APMC Pune",
+      "district": "Pune",
+      "state": "Maharashtra",
+      "lat": 18.5204,
+      "lon": 73.8567,
+      "prices": {
+        "Tomato": [
+          1050
+        ],
+        "Onion": [
+          2900
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-22",
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Khed",
+      "district": "Pune",
+      "state": "Maharashtra",
+      "lat": 18.5204,
+      "lon": 73.8567,
+      "prices": {
+        "Tomato": [
+          1000
+        ],
+        "Onion": [
+          3500
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-22",
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Ratnagiri (Nachane)",
+      "district": "Ratnagiri",
+      "state": "Maharashtra",
+      "lat": 16.9902,
+      "lon": 73.312,
+      "prices": {
+        "Tomato": [
+          1200
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17"
+      }
+    },
+    {
+      "market": "APMC Bhusaval",
+      "district": "Jalgaon",
+      "state": "Maharashtra",
+      "lat": 21.0077,
+      "lon": 75.5626,
+      "prices": {
+        "Tomato": [
+          1200
+        ],
+        "Onion": [
+          4500
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17",
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Ghoti",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Tomato": [
+          2100
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Hingna",
+      "district": "Nagpur",
+      "state": "Maharashtra",
+      "lat": 21.1458,
+      "lon": 79.0882,
+      "prices": {
+        "Tomato": [
+          2457
+        ],
+        "Onion": [
+          4900
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-21",
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "APMC Islampur",
+      "district": "Sangli",
+      "state": "Maharashtra",
+      "lat": 16.8524,
+      "lon": 74.5815,
+      "prices": {
+        "Tomato": [
+          1100
+        ],
+        "Onion": [
+          4500
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17",
+        "Onion": "2026-09-24"
+      }
+    },
+    {
+      "market": "APMC Ramtek",
+      "district": "Nagpur",
+      "state": "Maharashtra",
+      "lat": 21.1458,
+      "lon": 79.0882,
+      "prices": {
+        "Tomato": [
+          1500
+        ],
+        "Onion": [
+          4000
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-19",
+        "Onion": "2026-09-20"
+      }
+    },
+    {
+      "market": "APMC Mangal Wedha",
+      "district": "Solapur",
+      "state": "Maharashtra",
+      "lat": 17.6599,
+      "lon": 75.9064,
+      "prices": {
+        "Tomato": [
+          1100
+        ],
+        "Onion": [
+          4400
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-18",
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "APMC Kamthi",
+      "district": "Nagpur",
+      "state": "Maharashtra",
+      "lat": 21.1458,
+      "lon": 79.0882,
+      "prices": {
+        "Tomato": [
+          1750
+        ],
+        "Onion": [
+          4850
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17",
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "APMC Nagpur",
+      "district": "Nagpur",
+      "state": "Maharashtra",
+      "lat": 21.1458,
+      "lon": 79.0882,
+      "prices": {
+        "Tomato": [
+          2025
+        ],
+        "Onion": [
+          5250
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-19",
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "APMC Vita",
+      "district": "Sangli",
+      "state": "Maharashtra",
+      "lat": 16.8524,
+      "lon": 74.5815,
+      "prices": {
+        "Tomato": [
+          1200
+        ],
+        "Onion": [
+          5200
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17",
+        "Onion": "2026-09-24"
+      }
+    },
+    {
+      "market": "APMC Kolhapur",
+      "district": "Kolhapur",
+      "state": "Maharashtra",
+      "lat": 16.705,
+      "lon": 74.2433,
+      "prices": {
+        "Tomato": [
+          900
+        ],
+        "Onion": [
+          3200
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17",
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "APMC Mumbai",
+      "district": "Mumbai",
+      "state": "Maharashtra",
+      "lat": 19.076,
+      "lon": 72.8777,
+      "prices": {
+        "Tomato": [
+          2500
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17"
+      }
+    },
+    {
+      "market": "Pune(Moshi)",
+      "district": "Pune",
+      "state": "Maharashtra",
+      "lat": 18.5204,
+      "lon": 73.8567,
+      "prices": {
+        "Tomato": [
+          850
+        ],
+        "Onion": [
+          3250
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17",
+        "Onion": "2026-09-20"
+      }
+    },
+    {
+      "market": "APMC Jalgaon",
+      "district": "Jalgaon",
+      "state": "Maharashtra",
+      "lat": 21.0077,
+      "lon": 75.5626,
+      "prices": {
+        "Tomato": [
+          700
+        ],
+        "Onion": [
+          2750
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-18",
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Solapur",
+      "district": "Solapur",
+      "state": "Maharashtra",
+      "lat": 17.6599,
+      "lon": 75.9064,
+      "prices": {
+        "Tomato": [
+          800
+        ],
+        "Onion": [
+          3400
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-18",
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "Pune(Pimpri)",
+      "district": "Pune",
+      "state": "Maharashtra",
+      "lat": 18.5204,
+      "lon": 73.8567,
+      "prices": {
+        "Tomato": [
+          1500
+        ],
+        "Onion": [
+          4250
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17",
+        "Onion": "2026-09-20"
+      }
+    },
+    {
+      "market": "APMC Kalmeshwar",
+      "district": "Nagpur",
+      "state": "Maharashtra",
+      "lat": 21.1458,
+      "lon": 79.0882,
+      "prices": {
+        "Tomato": [
+          1305
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17"
+      }
+    },
+    {
+      "market": "Chandrapur(Ganjwad)",
+      "district": "Chandrapur",
+      "state": "Maharashtra",
+      "lat": 19.9615,
+      "lon": 79.2961,
+      "prices": {
+        "Tomato": [
+          1200
+        ],
+        "Onion": [
+          5500
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17",
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "APMC Panvel",
+      "district": "Raigad",
+      "state": "Maharashtra",
+      "lat": 18.5158,
+      "lon": 73.1812,
+      "prices": {
+        "Tomato": [
+          2750
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17"
+      }
+    },
+    {
+      "market": "APMC Satara",
+      "district": "Satara",
+      "state": "Maharashtra",
+      "lat": 17.6805,
+      "lon": 74.0183,
+      "prices": {
+        "Tomato": [
+          850
+        ],
+        "Onion": [
+          3400
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17",
+        "Onion": "2026-09-20"
+      }
+    },
+    {
+      "market": "Pune(Manjri)",
+      "district": "Pune",
+      "state": "Maharashtra",
+      "lat": 18.5204,
+      "lon": 73.8567,
+      "prices": {
+        "Tomato": [
+          1000
+        ],
+        "Onion": [
+          4000
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-18",
+        "Onion": "2026-09-20"
+      }
+    },
+    {
+      "market": "APMC Vadgaonpeth",
+      "district": "Kolhapur",
+      "state": "Maharashtra",
+      "lat": 16.705,
+      "lon": 74.2433,
+      "prices": {
+        "Tomato": [
+          1100
+        ],
+        "Onion": [
+          3500
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-23",
+        "Onion": "2026-09-24"
+      }
+    },
+    {
+      "market": "APMC Pandharpur",
+      "district": "Solapur",
+      "state": "Maharashtra",
+      "lat": 17.6599,
+      "lon": 75.9064,
+      "prices": {
+        "Tomato": [
+          1000
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-19"
+      }
+    },
+    {
+      "market": "APMC Dharashiv",
+      "district": "Dharashiv",
+      "state": "Maharashtra",
+      "lat": 18.1861,
+      "lon": 76.0419,
+      "prices": {
+        "Tomato": [
+          1250
+        ],
+        "Onion": [
+          4000
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-20",
+        "Onion": "2026-09-20"
+      }
+    },
+    {
+      "market": "APMC Vai",
+      "district": "Satara",
+      "state": "Maharashtra",
+      "lat": 17.6805,
+      "lon": 74.0183,
+      "prices": {
+        "Tomato": [
+          1250
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17"
+      }
+    },
+    {
+      "market": "Pune(Khadiki)",
+      "district": "Pune",
+      "state": "Maharashtra",
+      "lat": 18.5204,
+      "lon": 73.8567,
+      "prices": {
+        "Tomato": [
+          1000
+        ],
+        "Onion": [
+          1700
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-18",
+        "Onion": "2026-09-23"
+      }
+    },
+    {
+      "market": "APMC Patan",
+      "district": "Satara",
+      "state": "Maharashtra",
+      "lat": 17.6805,
+      "lon": 74.0183,
+      "prices": {
+        "Tomato": [
+          1750
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-18"
+      }
+    },
+    {
+      "market": "APMC Navapur",
+      "district": "Nandurbar",
+      "state": "Maharashtra",
+      "lat": 21.3703,
+      "lon": 74.2404,
+      "prices": {
+        "Tomato": [
+          1105
+        ],
+        "Onion": [
+          2700
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-21",
+        "Onion": "2026-09-23"
+      }
+    },
+    {
+      "market": "APMC Karad",
+      "district": "Satara",
+      "state": "Maharashtra",
+      "lat": 17.6805,
+      "lon": 74.0183,
+      "prices": {
+        "Tomato": [
+          1000
+        ],
+        "Onion": [
+          5000
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-19",
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "Khed(Chakan)",
+      "district": "Pune",
+      "state": "Maharashtra",
+      "lat": 18.5204,
+      "lon": 73.8567,
+      "prices": {
+        "Tomato": [
+          1000
+        ],
+        "Onion": [
+          3600
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17",
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Palus",
+      "district": "Sangli",
+      "state": "Maharashtra",
+      "lat": 16.8524,
+      "lon": 74.5815,
+      "prices": {
+        "Tomato": [
+          1200
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17"
+      }
+    },
+    {
+      "market": "APMC Akluj",
+      "district": "Solapur",
+      "state": "Maharashtra",
+      "lat": 17.6599,
+      "lon": 75.9064,
+      "prices": {
+        "Tomato": [
+          1200
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-17"
+      }
+    },
+    {
+      "market": "APMC Chandwad",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Tomato": [
+          1125
+        ],
+        "Onion": [
+          3820
+        ]
+      },
+      "arrival_dates": {
+        "Tomato": "2026-09-18",
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Umrane",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          3900
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Yeola",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          3800
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "Mumbai-Onion & Potato Market",
+      "district": "Mumbai",
+      "state": "Maharashtra",
+      "lat": 19.076,
+      "lon": 72.8777,
+      "prices": {
+        "Onion": [
+          4000
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "Lasalgaon(Niphad)",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          4050
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Nasik",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          4100
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "APMC Kalvan",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          4100
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Manmad",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          3800
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "APMC Nampur",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          3500
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "Laxmi-Sopan Agriculture Produce Marketing Co Ltd, Barshi, Dist Solapur",
+      "district": "Solapur",
+      "state": "Maharashtra",
+      "lat": 17.6599,
+      "lon": 75.9064,
+      "prices": {
+        "Onion": [
+          4000
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "Pimpalgaon Baswant(Saykheda)",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          3500
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "APMC Pimpalgaon Baswant",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          4300
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "Junnar(Otur)",
+      "district": "Pune",
+      "state": "Maharashtra",
+      "lat": 18.5204,
+      "lon": 73.8567,
+      "prices": {
+        "Onion": [
+          4000
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-24"
+      }
+    },
+    {
+      "market": "APMC Junnar",
+      "district": "Pune",
+      "state": "Maharashtra",
+      "lat": 18.5204,
+      "lon": 73.8567,
+      "prices": {
+        "Onion": [
+          3900
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-24"
+      }
+    },
+    {
+      "market": "APMC Devala",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          4100
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Vaduj",
+      "district": "Satara",
+      "state": "Maharashtra",
+      "lat": 17.6805,
+      "lon": 74.0183,
+      "prices": {
+        "Onion": [
+          4500
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "Sangli(Phale, Bhajipala Market)",
+      "district": "Sangli",
+      "state": "Maharashtra",
+      "lat": 16.8524,
+      "lon": 74.5815,
+      "prices": {
+        "Onion": [
+          3300
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Akola",
+      "district": "Akola",
+      "state": "Maharashtra",
+      "lat": 20.7002,
+      "lon": 77.0082,
+      "prices": {
+        "Onion": [
+          3500
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "Lasalgaon(Vinchur)",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          3975
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Malkapur",
+      "district": "Buldhana",
+      "state": "Maharashtra",
+      "lat": 20.5312,
+      "lon": 76.1847,
+      "prices": {
+        "Onion": [
+          3150
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "Shivsiddha Govind Producer Company Ltd Sanchalit Khajgi Krushi Utpann Bajar Samati-Abhona-Kalwan",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          4150
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Lasalgaon",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          4070
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Sinner",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          3900
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "APMC Kalyan",
+      "district": "Thane",
+      "state": "Maharashtra",
+      "lat": 19.2183,
+      "lon": 72.9781,
+      "prices": {
+        "Onion": [
+          5000
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-24"
+      }
+    },
+    {
+      "market": "APMC Satana",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          3850
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-23"
+      }
+    },
+    {
+      "market": "APMC Sakri",
+      "district": "Dhule",
+      "state": "Maharashtra",
+      "lat": 20.9042,
+      "lon": 74.7749,
+      "prices": {
+        "Onion": [
+          3400
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "Dindori(Vani)",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          4251
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "APMC Dindori",
+      "district": "Nashik",
+      "state": "Maharashtra",
+      "lat": 19.9975,
+      "lon": 73.7898,
+      "prices": {
+        "Onion": [
+          4211
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "APMC Dhule",
+      "district": "Dhule",
+      "state": "Maharashtra",
+      "lat": 20.9042,
+      "lon": 74.7749,
+      "prices": {
+        "Onion": [
+          3600
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-21"
+      }
+    },
+    {
+      "market": "Junnar(Alephata)",
+      "district": "Pune",
+      "state": "Maharashtra",
+      "lat": 18.5204,
+      "lon": 73.8567,
+      "prices": {
+        "Onion": [
+          4100
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-20"
+      }
+    },
+    {
+      "market": "APMC Gevrai",
+      "district": "Beed",
+      "state": "Maharashtra",
+      "lat": 18.9891,
+      "lon": 75.7601,
+      "prices": {
+        "Onion": [
+          1800
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-22"
+      }
+    },
+    {
+      "market": "Junnar(Narayangaon)",
+      "district": "Pune",
+      "state": "Maharashtra",
+      "lat": 18.5204,
+      "lon": 73.8567,
+      "prices": {
+        "Onion": [
+          2900
+        ]
+      },
+      "arrival_dates": {
+        "Onion": "2026-09-20"
+      }
+    },
+    {
+      "market": "Koyambedu Market",
+      "district": "Chennai",
+      "state": "Tamil Nadu",
+      "lat": 13.0694,
+      "lon": 80.1948,
+      "prices": {
+        "Tomato": [
+          2400,
+          2450,
+          2500,
+          2550,
+          2600,
+          2700,
+          2800
+        ],
+        "Onion": [
+          2200,
+          2220,
+          2250,
+          2280,
+          2300,
+          2320,
+          2350
+        ]
+      }
+    },
+    {
+      "market": "Coimbatore Market",
+      "district": "Coimbatore",
+      "state": "Tamil Nadu",
+      "lat": 11.0168,
+      "lon": 76.9558,
+      "prices": {
+        "Tomato": [
+          2300,
+          2350,
+          2380,
+          2400,
+          2450,
+          2500,
+          2550
+        ],
+        "Onion": [
+          2150,
+          2170,
+          2200,
+          2200,
+          2230,
+          2250,
+          2280
+        ]
+      }
+    },
+    {
+      "market": "Salem Uzhavar Sandhai",
+      "district": "Salem",
+      "state": "Tamil Nadu",
+      "lat": 11.6643,
+      "lon": 78.146,
+      "prices": {
+        "Tomato": [
+          2100,
+          2150,
+          2200,
+          2250,
+          2250,
+          2300,
+          2350
+        ],
+        "Onion": [
+          2000,
+          2030,
+          2050,
+          2070,
+          2100,
+          2100,
+          2130
+        ]
+      }
+    },
+    {
+      "market": "Krishnagiri Market",
+      "district": "Krishnagiri",
+      "state": "Tamil Nadu",
+      "lat": 12.5266,
+      "lon": 78.2138,
+      "prices": {
+        "Tomato": [
+          2000,
+          2050,
+          2100,
+          2100,
+          2150,
+          2200,
+          2250
+        ],
+        "Onion": [
+          1950,
+          1970,
+          2000,
+          2020,
+          2040,
+          2060,
+          2080
+        ]
+      }
+    },
+    {
+      "market": "Vellore Market",
+      "district": "Vellore",
+      "state": "Tamil Nadu",
+      "lat": 12.9165,
+      "lon": 79.1325,
+      "prices": {
+        "Tomato": [
+          2200,
+          2250,
+          2300,
+          2350,
+          2400,
+          2450,
+          2500
+        ],
+        "Onion": [
+          2050,
+          2080,
+          2100,
+          2120,
+          2150,
+          2170,
+          2200
+        ]
+      }
+    }
+  ]
+}

@@ -1,56 +1,210 @@
 {
-  "_note": "Starter knowledge base for the hackathon demo. Doses are common extension-style guidance; ALWAYS follow the product label and confirm with the local KVK / agriculture officer before spraying. Expand and cite sources (ICAR / TNAU / state agri university) before any real deployment.",
+  "_note": "Knowledge base for KrishiChain Bharat. Doses are based on standard extension-style guidance; ALWAYS follow the product label and confirm with the local KVK / agriculture officer before spraying.",
   "crops": {
     "tomato": {
       "early_blight": {
         "name": "Early blight (Alternaria solani)",
         "symptoms": "Dark brown concentric-ring spots ('target board') on older leaves, yellowing around spots.",
-        "organic": ["Remove and destroy affected lower leaves", "Spray Trichoderma viride 5 g/L or neem oil 3 ml/L + sticky spreader", "Copper oxychloride 3 g/L (also accepted in organic-leaning plans)"],
-        "chemical": [{"active": "Mancozeb 75% WP", "dose": "2.5 g per litre water", "interval_days": 10}, {"active": "Chlorothalonil 75% WP", "dose": "2 g per litre water", "interval_days": 10}],
-        "cultural": ["Avoid overhead irrigation", "Stake plants for airflow", "Rotate away from solanaceous crops next season"],
-        "phi_days": 7
+        "organic": [
+          "Remove and destroy affected lower leaves",
+          "Spray Trichoderma viride 5 g/L or neem oil 3 ml/L + sticky spreader",
+          "Copper oxychloride 3 g/L (also accepted in organic-leaning plans)"
+        ],
+        "chemical": [
+          {"active": "Mancozeb 75% WP", "dose": "2.5 g per litre water", "interval_days": 10},
+          {"active": "Chlorothalonil 75% WP", "dose": "2 g per litre water", "interval_days": 10}
+        ],
+        "cultural": [
+          "Avoid overhead irrigation",
+          "Stake plants for airflow",
+          "Rotate away from solanaceous crops next season"
+        ],
+        "phi_days": 7,
+        "source": "TNAU Agritech Portal (Horticulture - Tomato Crop Protection)"
       },
       "late_blight": {
         "name": "Late blight (Phytophthora infestans)",
         "symptoms": "Water-soaked greasy patches turning brown-black, white fuzzy growth underneath in humid weather; fast spreading.",
-        "organic": ["Remove infected plants/leaves immediately and bury away from field", "Preventive copper oxychloride 3 g/L on healthy plants"],
-        "chemical": [{"active": "Metalaxyl + Mancozeb", "dose": "2.5 g per litre water", "interval_days": 7}, {"active": "Cymoxanil + Mancozeb", "dose": "3 g per litre water", "interval_days": 7}],
-        "cultural": ["Improve drainage", "Avoid irrigating in the evening", "Do not move tools/labour from infected to healthy plots"],
-        "phi_days": 7
+        "organic": [
+          "Remove infected plants/leaves immediately and bury away from field",
+          "Preventive copper oxychloride 3 g/L on healthy plants"
+        ],
+        "chemical": [
+          {"active": "Metalaxyl + Mancozeb", "dose": "2.5 g per litre water", "interval_days": 7},
+          {"active": "Cymoxanil + Mancozeb", "dose": "3 g per litre water", "interval_days": 7}
+        ],
+        "cultural": [
+          "Improve drainage",
+          "Avoid irrigating in the evening",
+          "Do not move tools/labour from infected to healthy plots"
+        ],
+        "phi_days": 7,
+        "source": "TNAU Agritech Portal (Horticulture - Tomato Crop Protection)"
       },
       "leaf_curl_virus": {
         "name": "Tomato leaf curl virus (whitefly-transmitted)",
         "symptoms": "Upward curling and crinkling of leaves, yellowing, stunted plants; whiteflies under leaves.",
-        "organic": ["Yellow sticky traps (about 10 per 1000 sq m)", "Neem oil 3-5 ml/L or neem seed kernel extract 5% against whitefly", "Uproot and destroy severely infected plants"],
-        "chemical": [{"active": "Imidacloprid 17.8% SL (vector control only; virus itself cannot be cured)", "dose": "0.3 ml per litre water", "interval_days": 14}],
-        "cultural": ["Border crop of maize/sorghum as barrier", "Use virus-tolerant varieties next season", "Control weeds that host whitefly"],
-        "phi_days": 7
+        "organic": [
+          "Yellow sticky traps (about 10 per 1000 sq m)",
+          "Neem oil 3-5 ml/L or neem seed kernel extract 5% against whitefly",
+          "Uproot and destroy severely infected plants"
+        ],
+        "chemical": [
+          {"active": "Imidacloprid 17.8% SL (vector control only; virus itself cannot be cured)", "dose": "0.3 ml per litre water", "interval_days": 14}
+        ],
+        "cultural": [
+          "Border crop of maize/sorghum as barrier",
+          "Use virus-tolerant varieties next season",
+          "Control weeds that host whitefly"
+        ],
+        "phi_days": 7,
+        "source": "TNAU Agritech Portal (Horticulture - Tomato Crop Protection)"
       },
       "bacterial_spot": {
         "name": "Bacterial spot (Xanthomonas)",
         "symptoms": "Small dark water-soaked spots on leaves and fruit, often with yellow halo; worse after rain.",
-        "organic": ["Remove infected leaves", "Copper oxychloride 3 g/L spray"],
-        "chemical": [{"active": "Copper oxychloride + Streptocycline", "dose": "3 g + 0.1 g per litre water", "interval_days": 10}],
-        "cultural": ["Use disease-free seed/seedlings", "Avoid working in wet fields"],
-        "phi_days": 7
+        "organic": [
+          "Remove infected leaves",
+          "Copper oxychloride 3 g/L spray"
+        ],
+        "chemical": [
+          {"active": "Copper oxychloride + Streptocycline", "dose": "3 g + 0.1 g per litre water", "interval_days": 10}
+        ],
+        "cultural": [
+          "Use disease-free seed/seedlings",
+          "Avoid working in wet fields"
+        ],
+        "phi_days": 7,
+        "source": "TNAU Agritech Portal (Horticulture - Tomato Crop Protection)"
+      },
+      "fusarium_wilt": {
+        "name": "Fusarium wilt (Fusarium oxysporum f. sp. lycopersici)",
+        "symptoms": "Yellowing of lower leaves on one side of shoot, daytime wilting, vascular browning inside stem.",
+        "organic": [
+          "Soil application of Trichoderma harzianum @ 2.5 kg/ha mixed with 50 kg farm yard manure",
+          "Neem cake soil amendment @ 250 kg/ha"
+        ],
+        "chemical": [
+          {"active": "Carbendazim 50% WP (soil drenching)", "dose": "1 g per litre water", "interval_days": 14}
+        ],
+        "cultural": [
+          "Crop rotation with non-host crops (paddy/cereals)",
+          "Deep summer ploughing",
+          "Use wilt-resistant rootstock/varieties"
+        ],
+        "phi_days": 14,
+        "source": "needs_verification"
+      },
+      "powdery_mildew": {
+        "name": "Powdery mildew (Leveillula taurica)",
+        "symptoms": "White powdery fungal patches on lower and upper leaf surfaces, followed by chlorosis and leaf drying.",
+        "organic": [
+          "Spray wettable sulphur 80% WP @ 2 g/L",
+          "Neem oil 3 ml/L spray at first appearance of symptoms"
+        ],
+        "chemical": [
+          {"active": "Hexaconazole 5% EC", "dose": "1 ml per litre water", "interval_days": 10},
+          {"active": "Azoxystrobin 23% SC", "dose": "1 ml per litre water", "interval_days": 14}
+        ],
+        "cultural": [
+          "Ensure good field ventilation and spacing",
+          "Avoid excessive nitrogen fertilization"
+        ],
+        "phi_days": 5,
+        "source": "needs_verification"
       }
     },
     "onion": {
       "purple_blotch": {
         "name": "Purple blotch (Alternaria porri)",
         "symptoms": "Small white sunken lesions that enlarge into purple-brown blotches with yellow edges on leaves and flower stalks.",
-        "organic": ["Remove badly affected leaves", "Neem oil 3 ml/L with sticky spreader", "Trichoderma viride 5 g/L"],
-        "chemical": [{"active": "Mancozeb 75% WP", "dose": "2.5 g per litre water", "interval_days": 10}, {"active": "Propiconazole 25% EC", "dose": "1 ml per litre water", "interval_days": 14}],
-        "cultural": ["Wider spacing for airflow", "Avoid excess nitrogen", "Crop rotation with non-allium crops"],
-        "phi_days": 7
+        "organic": [
+          "Remove badly affected leaves",
+          "Neem oil 3 ml/L with sticky spreader",
+          "Trichoderma viride 5 g/L"
+        ],
+        "chemical": [
+          {"active": "Mancozeb 75% WP", "dose": "2.5 g per litre water", "interval_days": 10},
+          {"active": "Propiconazole 25% EC", "dose": "1 ml per litre water", "interval_days": 14}
+        ],
+        "cultural": [
+          "Wider spacing for airflow",
+          "Avoid excess nitrogen",
+          "Crop rotation with non-allium crops"
+        ],
+        "phi_days": 7,
+        "source": "TNAU Agritech Portal (Horticulture - Onion Crop Protection)"
       },
       "downy_mildew": {
         "name": "Downy mildew (Peronospora destructor)",
         "symptoms": "Pale elongated patches on leaves with greyish-violet fuzz in cool humid weather; leaves collapse.",
-        "organic": ["Remove infected foliage", "Copper oxychloride 3 g/L preventive spray"],
-        "chemical": [{"active": "Metalaxyl + Mancozeb", "dose": "2.5 g per litre water", "interval_days": 10}],
-        "cultural": ["Improve drainage", "Avoid dense planting"],
-        "phi_days": 7
+        "organic": [
+          "Remove infected foliage",
+          "Copper oxychloride 3 g/L preventive spray"
+        ],
+        "chemical": [
+          {"active": "Metalaxyl + Mancozeb", "dose": "2.5 g per litre water", "interval_days": 10}
+        ],
+        "cultural": [
+          "Improve drainage",
+          "Avoid dense planting"
+        ],
+        "phi_days": 7,
+        "source": "TNAU Agritech Portal (Horticulture - Onion Crop Protection)"
+      },
+      "stemphylium_blight": {
+        "name": "Stemphylium leaf blight (Stemphylium vesicarium)",
+        "symptoms": "Small yellow to orange spots on leaves, rapidly developing into elongated brown to dark olive necrotic lesions.",
+        "organic": [
+          "Trichoderma viride 5 g/L spray",
+          "Neem formulation spray 3 ml/L with adjuvant"
+        ],
+        "chemical": [
+          {"active": "Iprodione 50% WP", "dose": "2 g per litre water", "interval_days": 10},
+          {"active": "Difenoconazole 25% EC", "dose": "1 ml per litre water", "interval_days": 12}
+        ],
+        "cultural": [
+          "Maintain balanced potassium and nitrogen levels",
+          "Avoid overhead sprinkler irrigation during high humidity"
+        ],
+        "phi_days": 10,
+        "source": "needs_verification"
+      },
+      "basal_rot": {
+        "name": "Basal rot / Bulb rot (Fusarium oxysporum f. sp. cepae)",
+        "symptoms": "Yellowing and drying of leaves starting from the tips, decaying of root-stem plate and softening of bulb base.",
+        "organic": [
+          "Bulb / seedling dip in Trichoderma viride suspension (10 g/L) before planting",
+          "Soil application of neem cake @ 200 kg/ha"
+        ],
+        "chemical": [
+          {"active": "Carbendazim 50% WP (seedling dip / soil drench)", "dose": "1 g per litre water", "interval_days": 15}
+        ],
+        "cultural": [
+          "3-year crop rotation avoiding allium crops",
+          "Ensure well-drained raised beds",
+          "Careful harvesting to avoid bulb injury"
+        ],
+        "phi_days": 14,
+        "source": "needs_verification"
+      },
+      "black_mould": {
+        "name": "Black mould rot (Aspergillus niger)",
+        "symptoms": "Black powdery spores along veins and under outer dry scales of onion bulbs, soft rot during storage.",
+        "organic": [
+          "Proper field curing of onions under shade with good ventilation",
+          "Spray biocontrol Pseudomonas fluorescens 5 g/L before harvest"
+        ],
+        "chemical": [
+          {"active": "Mancozeb 75% WP (pre-harvest spray)", "dose": "2.5 g per litre water", "interval_days": 15}
+        ],
+        "cultural": [
+          "Thorough drying and curing before storage",
+          "Store bulbs in well-ventilated, cool, dry structures",
+          "Discard bruised or injured bulbs"
+        ],
+        "phi_days": 7,
+        "source": "needs_verification"
       }
     }
   }
