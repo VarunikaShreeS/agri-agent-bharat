@@ -1,96 +1,65 @@
 import os
 import streamlit as st
-from agent_engine import run_agri_agent
+from dotenv import load_dotenv
 
-st.set_page_config(page_title="KrishiChain Agent - Bharat Agentic 2026", layout="wide")
+load_dotenv()
+from agent.orchestrator import run_agent, MODEL  # noqa: E402
 
-# Custom CSS for Winning UI Styling
-st.markdown("""
-    <style>
-    .main { background-color: #0e1117; }
-    .stButton>button { width: 100%; background-color: #2e7d32; color: white; font-weight: bold; border-radius: 8px; padding: 0.6rem; }
-    .stButton>button:hover { background-color: #388e3c; border-color: #4caf50; }
-    </style>
-""", unsafe_allow_html=True)
+st.set_page_config(page_title="KrishiChain Agent", page_icon="🌾", layout="wide")
 
-# Sidebar Configuration
-st.sidebar.title("🔑 Configuration")
-api_key_input = st.sidebar.text_input("Enter Google Gemini API Key", type="password", placeholder="AIzaSy...")
-st.sidebar.markdown("[Get a free Gemini API Key here](https://aistudio.google.com/app/apikey)")
+st.sidebar.title("⚙️ Settings")
+key = st.sidebar.text_input("Gemini API key (optional if set in .env)", type="password")
+language = st.sidebar.selectbox("Advisory language", ["English", "Hindi (हिंदी)", "Marathi (मराठी)", "Telugu (తెలుగు)", "Tamil (தமிழ்)", "Punjabi (ਪੰਜਾਬੀ)"])
+st.sidebar.caption(f"Model: `{MODEL}`")
+st.sidebar.caption("Live prices: " + ("on (data.gov.in key found)" if os.getenv("DATA_GOV_API_KEY") else "off — using seeded snapshot"))
 
-st.sidebar.markdown("---")
-st.sidebar.markdown("### 🌐 Localization & Voice")
-selected_language = st.sidebar.selectbox(
-    "Choose Output Language",
-    ["English", "Hindi (हिंदी)", "Marathi (मराठी)", "Telugu (తెలుగు)", "Tamil (தமிழ்)", "Punjabi (ਪੰਜਾਬी)"]
-)
-
-voice_assistance = st.sidebar.checkbox("🔊 Enable Rural Voice-Assisted Audio Summary (Simulated)", value=True)
-
-st.sidebar.markdown("---")
-st.sidebar.info("🏆 **Bharat Agentic 2026 Submission**\nDomain: AgriTech (Crop Health & Market Linkages)")
-
-# Main Header
 st.title("🌾 KrishiChain Agent")
-st.subheader("Autonomous Multi-Modal Crop Health & Market Linkage Engine for Bharat")
-st.markdown("---")
+st.caption("Photo + question → diagnosis → treatment → best mandi by NET rupees, in your language.")
 
-# Quick Stats Banner
-col_m1, col_m2, col_m3, col_m4 = st.columns(4)
-col_m1.metric("Active APMC Mandis", "3,240+", "Live e-NAM synced")
-col_m2.metric("Vision Diagnostic Accuracy", "99.2%", "Gemini 3.8 Flash")
-col_m3.metric("Govt Schemes Indexed", "142", "Central & State")
-col_m4.metric("Average Farmer Income Boost", "+22.5%", "Via Arbitrage")
+with st.form("f"):
+    c1, c2, c3 = st.columns(3)
+    crop = c1.selectbox("Crop", ["Tomato", "Onion"])
+    district = c2.text_input("District, State", "Nashik, Maharashtra")
+    qty = c3.number_input("Quantity to sell (quintals)", min_value=1.0, value=20.0, step=1.0)
+    query = st.text_area("Describe the problem (any language)", "Leaves have dark rings and are turning yellow.")
+    img = st.file_uploader("Leaf photo (recommended)", type=["jpg", "jpeg", "png"])
+    go = st.form_submit_button("🚀 Run agent", use_container_width=True)
 
-st.markdown("---")
+if go:
+    api_key = key or os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        st.error("Add a Gemini API key in the sidebar or .env")
+        st.stop()
+    with st.spinner("Agent is reasoning and calling tools…"):
+        res = run_agent(crop=crop, district=district, quantity_quintals=qty, query=query, language=language,
+                        image_bytes=img.getvalue() if img else None,
+                        image_mime=img.type if img else "image/jpeg", api_key=api_key)
 
-with st.form("farmer_form"):
-    col1, col2 = st.columns(2)
-    with col1:
-        crop_name = st.text_input("Crop Name", "Tomato")
-    with col2:
-        location = st.text_input("District / State", "Nashik, Maharashtra")
-        
-    symptoms = st.text_area("Describe symptoms / farmer query", "Leaves are curling upwards with yellow spots and whiteflies underneath.")
-    
-    uploaded_file = st.file_uploader("Upload Leaf / Crop Image (Optional)", type=["jpg", "png", "jpeg"])
-    
-    submitted = st.form_submit_button("🚀 Run Autonomous Agri-Agent Pipeline")
+    if res.errors:
+        st.error("Agent error: " + "; ".join(res.errors))
 
-if submitted:
-    if not api_key_input:
-        st.error("⚠️ Please enter your Google Gemini API Key in the left sidebar first!")
-    else:
-        with st.spinner("🤖 Autonomous Multi-Agent Orchestrator is executing vision, mandi pricing, and subsidy tools..."):
-            try:
-                log_data, result = run_agri_agent(
-                    crop_name=crop_name, 
-                    location=location, 
-                    symptoms=symptoms, 
-                    language=selected_language, 
-                    uploaded_image=uploaded_file, 
-                    api_key=api_key_input
-                )
-                
-                st.success("✨ Autonomous Execution Complete!")
-                
-                if voice_assistance:
-                    st.audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", format="audio/mp3")
-                    st.caption("🎙️ Audio advisory broadcast generated in " + selected_language + " for farmer feature phone playback.")
+    m = st.columns(4)
+    d, p = res.diagnosis, res.plan
+    if d and d.get("image_available"):
+        m[0].metric("Diagnosis", d["disease"].replace("_", " ").title())
+        m[1].metric("Severity / Confidence", f'{d["severity"]:.0%} / {d["confidence"]:.0%}')
+        if d.get("low_confidence"):
+            st.warning("Low confidence — please upload a clearer close-up photo. The agent will not prescribe chemicals.")
+    if p:
+        m[2].metric("Best market (net)", p["best"]["market"], f'₹{p["best"]["net"]:,.0f}')
+        m[3].metric("Gain vs local mandi", f'₹{p["uplift_inr_vs_local"]:,.0f}', f'{p["uplift_pct_vs_local"]}%')
+        badge = "🟢 LIVE" if p["data_source"] == "live_agmarknet" else "🟡 CACHED / SEEDED SNAPSHOT"
+        st.caption(f'Price data: {badge} · as of {p["data_as_of"]} · transport, commission & spoilage deducted')
+        st.dataframe([{"Market": o["market"], "Distance km": o["distance_km"], "₹/qtl": o["price_per_quintal"],
+                       "7d trend %": o["trend_7d_pct"], "Freight ₹": o["freight"], "Net ₹": o["net"]}
+                      for o in p["top_options"]], use_container_width=True, hide_index=True)
 
-                with st.expander("🔍 View Live Agent Tool Execution Graph & Logs"):
-                    st.code(log_data, language="text")
-                
-                st.markdown("### 📋 Agent Intelligence Report")
-                st.markdown(result)
-                
-                # Download Button for Report
-                st.download_button(
-                    label="📥 Download Official KrishiChain Advisory Report (Markdown)",
-                    data=result,
-                    file_name=f"KrishiChain_Advisory_{crop_name}_{location}.md",
-                    mime="text/markdown"
-                )
-                
-            except Exception as e:
-                st.error(f"Execution Error: {e}")
+    with st.expander(f"🔍 Agent trace — {len(res.trace)} real tool calls", expanded=True):
+        for s in res.trace:
+            icon = "✅" if s["status"] == "ok" else "⚠️"
+            st.markdown(f'{icon} **Step {s["step"]}: `{s["tool"]}`** · {s["latency_s"]}s')
+            st.code(f'args: {s["args"]}\nresult: {s["result_preview"]}', language="text")
+
+    st.markdown("### 📋 Advisory")
+    st.markdown(res.answer)
+    st.download_button("📥 Download advisory", res.answer, file_name=f"KrishiChain_{crop}_{district}.md")

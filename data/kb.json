@@ -1,0 +1,57 @@
+{
+  "_note": "Starter knowledge base for the hackathon demo. Doses are common extension-style guidance; ALWAYS follow the product label and confirm with the local KVK / agriculture officer before spraying. Expand and cite sources (ICAR / TNAU / state agri university) before any real deployment.",
+  "crops": {
+    "tomato": {
+      "early_blight": {
+        "name": "Early blight (Alternaria solani)",
+        "symptoms": "Dark brown concentric-ring spots ('target board') on older leaves, yellowing around spots.",
+        "organic": ["Remove and destroy affected lower leaves", "Spray Trichoderma viride 5 g/L or neem oil 3 ml/L + sticky spreader", "Copper oxychloride 3 g/L (also accepted in organic-leaning plans)"],
+        "chemical": [{"active": "Mancozeb 75% WP", "dose": "2.5 g per litre water", "interval_days": 10}, {"active": "Chlorothalonil 75% WP", "dose": "2 g per litre water", "interval_days": 10}],
+        "cultural": ["Avoid overhead irrigation", "Stake plants for airflow", "Rotate away from solanaceous crops next season"],
+        "phi_days": 7
+      },
+      "late_blight": {
+        "name": "Late blight (Phytophthora infestans)",
+        "symptoms": "Water-soaked greasy patches turning brown-black, white fuzzy growth underneath in humid weather; fast spreading.",
+        "organic": ["Remove infected plants/leaves immediately and bury away from field", "Preventive copper oxychloride 3 g/L on healthy plants"],
+        "chemical": [{"active": "Metalaxyl + Mancozeb", "dose": "2.5 g per litre water", "interval_days": 7}, {"active": "Cymoxanil + Mancozeb", "dose": "3 g per litre water", "interval_days": 7}],
+        "cultural": ["Improve drainage", "Avoid irrigating in the evening", "Do not move tools/labour from infected to healthy plots"],
+        "phi_days": 7
+      },
+      "leaf_curl_virus": {
+        "name": "Tomato leaf curl virus (whitefly-transmitted)",
+        "symptoms": "Upward curling and crinkling of leaves, yellowing, stunted plants; whiteflies under leaves.",
+        "organic": ["Yellow sticky traps (about 10 per 1000 sq m)", "Neem oil 3-5 ml/L or neem seed kernel extract 5% against whitefly", "Uproot and destroy severely infected plants"],
+        "chemical": [{"active": "Imidacloprid 17.8% SL (vector control only; virus itself cannot be cured)", "dose": "0.3 ml per litre water", "interval_days": 14}],
+        "cultural": ["Border crop of maize/sorghum as barrier", "Use virus-tolerant varieties next season", "Control weeds that host whitefly"],
+        "phi_days": 7
+      },
+      "bacterial_spot": {
+        "name": "Bacterial spot (Xanthomonas)",
+        "symptoms": "Small dark water-soaked spots on leaves and fruit, often with yellow halo; worse after rain.",
+        "organic": ["Remove infected leaves", "Copper oxychloride 3 g/L spray"],
+        "chemical": [{"active": "Copper oxychloride + Streptocycline", "dose": "3 g + 0.1 g per litre water", "interval_days": 10}],
+        "cultural": ["Use disease-free seed/seedlings", "Avoid working in wet fields"],
+        "phi_days": 7
+      }
+    },
+    "onion": {
+      "purple_blotch": {
+        "name": "Purple blotch (Alternaria porri)",
+        "symptoms": "Small white sunken lesions that enlarge into purple-brown blotches with yellow edges on leaves and flower stalks.",
+        "organic": ["Remove badly affected leaves", "Neem oil 3 ml/L with sticky spreader", "Trichoderma viride 5 g/L"],
+        "chemical": [{"active": "Mancozeb 75% WP", "dose": "2.5 g per litre water", "interval_days": 10}, {"active": "Propiconazole 25% EC", "dose": "1 ml per litre water", "interval_days": 14}],
+        "cultural": ["Wider spacing for airflow", "Avoid excess nitrogen", "Crop rotation with non-allium crops"],
+        "phi_days": 7
+      },
+      "downy_mildew": {
+        "name": "Downy mildew (Peronospora destructor)",
+        "symptoms": "Pale elongated patches on leaves with greyish-violet fuzz in cool humid weather; leaves collapse.",
+        "organic": ["Remove infected foliage", "Copper oxychloride 3 g/L preventive spray"],
+        "chemical": [{"active": "Metalaxyl + Mancozeb", "dose": "2.5 g per litre water", "interval_days": 10}],
+        "cultural": ["Improve drainage", "Avoid dense planting"],
+        "phi_days": 7
+      }
+    }
+  }
+}
