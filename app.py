@@ -164,32 +164,53 @@ if res_data:
         local = p["local_baseline"]
         uplift = p["uplift_inr_vs_local"]
         uplift_pct = p["uplift_pct_vs_local"]
-        src = p.get("data_source", "frozen_real")
-        as_of = p.get("data_as_of", "recent")
+        tier = p.get("data_tier") or p.get("data_source", "frozen_real")
+        p_date = p.get("price_date") or p.get("data_as_of", "recent")
+        rec = p.get("recommendation", "marginal")
+        be_freight = p.get("break_even_freight_inr_per_qtl_km")
 
-        if src == "live_mandi_api":
-            badge_str = f"🟢 LIVE (Mandi Price API, {as_of})"
-        elif src == "live_agmarknet":
-            badge_str = f"🟢 LIVE (data.gov.in, {as_of})"
-        elif src == "frozen_real":
-            badge_str = f"🔵 FROZEN REAL ({as_of})"
+        if tier == "live_mandi_api":
+            badge_str = f"🟢 LIVE (Mandi Price API, {p_date})"
+        elif tier == "live_agmarknet":
+            badge_str = f"🟢 LIVE (data.gov.in, {p_date})"
+        elif tier == "frozen_real":
+            badge_str = f"🔵 FROZEN REAL ({p_date})"
         else:
-            badge_str = f"🟡 SEED ({as_of} illustrative)"
+            badge_str = f"🟡 SEED ({p_date} illustrative)"
+
+        be_text = f"Stops paying above Rs {be_freight:.2f}/qtl-km" if be_freight is not None else "Local mandi is optimal"
+
+        if rec == "travel":
+            hero_title = f"{best['market']} may net about Rs {int(uplift):,} more (+{uplift_pct}%) after freight, commission and spoilage. Estimated."
+            pill_label = "NET GAIN ESTIMATED"
+            pill_val = f"+₹{int(uplift):,} ({uplift_pct}%)"
+            border_color = "#22c55e"
+        elif rec == "marginal":
+            hero_title = f"Roughly break-even (+{uplift_pct}%). Selling locally is lower risk. Estimated."
+            pill_label = "MARGINAL RETURN"
+            pill_val = f"+₹{int(uplift):,} ({uplift_pct}%)"
+            border_color = "#eab308"
+        else:  # sell_local
+            hero_title = f"Sell at your local mandi. {best['market']} does not beat it after costs. Estimated."
+            pill_label = "NET DIFFERENCE"
+            pill_val = f"₹{int(uplift):,} ({uplift_pct}%)"
+            border_color = "#ef4444"
 
         st.markdown(f"""
-        <div style="background: linear-gradient(135deg, rgba(20, 83, 45, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%); 
-                    border: 2px solid #22c55e; border-radius: 12px; padding: 18px 24px; margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                <div>
-                    <span style="font-size: 0.85rem; text-transform: uppercase; color: #86efac; font-weight: 700; letter-spacing: 0.05em;">Recommended Market</span>
-                    <h2 style="margin: 4px 0; color: #ffffff; font-size: 1.8rem;">Sell at {best['market']} ({best['district']})</h2>
-                    <p style="margin: 0; color: #cbd5e1; font-size: 0.95rem;">
-                        Net Realization: <b>₹{int(best['net']):,}</b> &nbsp;|&nbsp; Local Mandi ({local['market']}): <b>₹{int(local['net']):,}</b>
+        <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%); 
+                    border: 2px solid {border_color}; border-radius: 12px; padding: 18px 24px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                <div style="flex: 1; min-width: 280px;">
+                    <span style="font-size: 0.85rem; text-transform: uppercase; color: #94a3b8; font-weight: 700; letter-spacing: 0.05em;">Recommendation ({rec.upper()})</span>
+                    <h3 style="margin: 6px 0; color: #ffffff; font-size: 1.3rem; line-height: 1.4;">{hero_title}</h3>
+                    <p style="margin: 0; color: #cbd5e1; font-size: 0.9rem;">
+                        Net Realization: <b>₹{int(best['net']):,}</b> at {best['market']} &nbsp;|&nbsp; Local ({local['market']}): <b>₹{int(local['net']):,}</b><br>
+                        <span style="color: #94a3b8; font-size: 0.85rem;">{be_text} · Price Date: {p_date} ({tier})</span>
                     </p>
                 </div>
-                <div style="text-align: right; background: rgba(34, 197, 94, 0.15); padding: 10px 18px; border-radius: 10px; border: 1px solid rgba(34, 197, 94, 0.4);">
-                    <div style="font-size: 0.8rem; color: #86efac; font-weight: 600;">NET GAIN VS LOCAL</div>
-                    <div style="font-size: 1.9rem; font-weight: 800; color: #4ade80;">+₹{int(uplift):,} <span style="font-size: 1.1rem;">({uplift_pct}%)</span></div>
+                <div style="text-align: right; background: rgba(255, 255, 255, 0.05); padding: 10px 18px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div style="font-size: 0.75rem; color: #94a3b8; font-weight: 600;">{pill_label}</div>
+                    <div style="font-size: 1.6rem; font-weight: 800; color: #f8fafc;">{pill_val}</div>
                     <div style="font-size: 0.75rem; color: #94a3b8;">{badge_str}</div>
                 </div>
             </div>
@@ -251,14 +272,27 @@ if res_data:
             st.markdown("""
             **Net Realization Formula**:
             $$\\text{Net Take-Home} = \\text{Gross Revenue} - \\text{Freight} - \\text{Commission (2\\%)} - \\text{Loading (₹15/qtl)} - \\text{Spoilage Loss}$$
+            
+            *Net excludes disease-related grade loss.*
             """)
             st.dataframe([
                 {"Market": o["market"], "District": o["district"], "Distance (km)": f"{o['distance_km']:.1f}",
+                 "Price Date": o.get("price_date", ""), "Data Tier": o.get("data_tier", ""),
                  "Modal (₹/qtl)": f"₹{int(o['price_per_quintal']):,}", "Gross (₹)": f"₹{int(o['gross']):,}",
                  "Freight (₹)": f"₹{int(o['freight']):,}", "Commission (₹)": f"₹{int(o['commission']):,}",
                  "Spoilage (₹)": f"₹{int(o['spoilage_loss']):,}", "Net Realization (₹)": f"₹{int(o['net']):,}"}
                 for o in p["top_options"]
             ], use_container_width=True, hide_index=True)
+
+            if p.get("sensitivity"):
+                st.markdown("##### 🔬 Sensitivity Analysis (Net Difference vs Local Mandi)")
+                st.dataframe([
+                    {"Scenario": s["label"], "Net Difference vs Local (₹)": f"₹{int(s['uplift_inr']):,}"}
+                    for s in p["sensitivity"]
+                ], use_container_width=True, hide_index=True)
+
+            if p.get("assumptions"):
+                st.caption(f"⚙️ **Model Assumptions**: {p['assumptions']}")
 
     # 6. AGENT FUNCTION-CALLING TRACE
     with st.expander(f"🔍 Agent Function-Calling Trace ({len(res_data.get('trace', []))} tool executions)", expanded=False):

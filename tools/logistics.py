@@ -1,11 +1,12 @@
 """Tool 3b: Distance + transport cost model (deterministic)."""
 from math import radians, sin, cos, asin, sqrt
 
-ROAD_FACTOR = 1.3            # straight-line -> approx road distance
-FREIGHT_PER_QTL_KM = 2.0     # Rs per quintal per km (configurable assumption)
-LOADING_PER_QTL = 15.0       # Rs per quintal loading/unloading
-COMMISSION_PCT = 2.0         # arhtiya/commission at mandi
-SPOILAGE_PCT_PER_100KM = {"tomato": 2.5, "onion": 0.5}  # perishability
+ROAD_FACTOR = 1.3            # ASSUMPTION - not sourced (ratio)
+FREIGHT_PER_QTL_KM = 2.0     # ASSUMPTION - not sourced (INR/qtl-km)
+LOADING_PER_QTL = 15.0       # ASSUMPTION - not sourced (INR/qtl)
+COMMISSION_PCT = 2.0         # ASSUMPTION - not sourced (%)
+SPOILAGE_PCT_PER_100KM = {"tomato": 2.5, "onion": 0.5}  # ASSUMPTION - not sourced (%/100km)
+MAX_PRICE_DATE_GAP_DAYS = 1  # ASSUMPTION - not sourced (days)
 
 
 def haversine_km(lat1, lon1, lat2, lon2) -> float:

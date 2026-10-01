@@ -26,9 +26,9 @@
   - Freight (₹2/qtl/km): ₹9,188
   - Commission (2%): ₹1,100
   - Loading (₹15/qtl): ₹300
-  - Spoilage (1% per 100km): ₹3,158
+  - Spoilage (2.5% per 100km): ₹3,158
   - **Panvel Net Realization**: **₹41,254**
-- **Net Real-World Gain vs Local Mandi**: **+₹394 (+1.0%)** after all logistics, toll, loading, and spoilage deductions.
+- **Net Real-World Gain vs Local Mandi**: **+₹394 (+0.96%)** after all logistics, toll, loading, and spoilage deductions.
 
 ## 3. Multilingual & Voice Coverage
 - **Deep Multilingual Languages Supported**: English (`en`), Hindi (`hi`), Tamil (`ta`)
@@ -36,9 +36,10 @@
 - **Audio Output**: 5-sentence concise regional spoken summaries generated via `gTTS` with zero placeholder audio
 
 ## 4. Test Suite Coverage
-- **Total Test Files**: 4 suites
-  1. `tests/test_tools.py`: 6 tests passing (KB, math, planning, recoveries)
-  2. `tests/test_agent_contract.py`: 5 tests passing (Trace wrapping, error resilience, guardrails)
-  3. `tests/test_mandi_adapters.py`: 6 tests passing (Live adapter, data.gov adapter, frozen real, seed, None safety)
-  4. `tests/test_robustness_guardrails.py`: 6 tests passing (Confidence threshold, KVK severe escalation, grounding verifier, demo cache integrity)
-- **Total Passing Automated Tests**: **23 / 23 PASS** (100% passing offline without API key)
+- **Total Test Files**: 5 suites
+  1. `tests/test_tools.py`: 3 tests passing (KB, math, planning, recoveries)
+  2. `tests/test_agent_contract.py`: 6 tests passing (Trace wrapping, error resilience, guardrails)
+  3. `tests/test_mandi_adapters.py`: 5 tests passing (Live adapter, data.gov adapter, frozen real, seed, None safety)
+  4. `tests/test_robustness_guardrails.py`: 3 tests passing (Confidence threshold, KVK severe escalation, grounding verifier, demo cache integrity)
+  5. `tests/test_sell_plan_golden.py`: 10 tests passing (Golden Nashik baseline, sensitivity, break-even freight, stale exclusions, classify boundary table)
+- **Total Passing Automated Tests**: **27 / 27 PASS** (100% passing offline without API key)
