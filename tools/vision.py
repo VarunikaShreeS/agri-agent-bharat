@@ -18,8 +18,21 @@ def diagnose(client, model: str, image_bytes: bytes, mime: str, crop: str) -> di
         contents=[types.Part.from_bytes(data=image_bytes, mime_type=mime), prompt],
         config=types.GenerateContentConfig(response_mime_type="application/json",
                                            response_schema=Diagnosis, temperature=0.1))
-    d = resp.parsed or Diagnosis.model_validate_json(resp.text)
-    disease = d.disease.strip().lower()
+    raw_text = (resp.text or "").strip()
+    if raw_text.startswith("```"):
+        raw_text = raw_text.split("\n", 1)[1].rsplit("```", 1)[0].strip()
+    d = getattr(resp, "parsed", None) or (Diagnosis.model_validate_json(raw_text) if raw_text else None)
+    if not d:
+        return {"image_available": True, "crop": crop, "disease": "unknown", "severity": 0.0, "confidence": 0.0,
+                "visible_symptoms": "Could not parse model output", "low_confidence": True,
+                "guardrail": "Confidence too low. Do NOT prescribe a chemical."}
+    disease = d.disease.strip().lower().replace(" ", "_").replace("-", "_")
+    if disease.startswith("tomato_"):
+        disease = disease[len("tomato_"):]
+    if disease.startswith("onion_"):
+        disease = disease[len("onion_"):]
+    if disease == "leaf_curl":
+        disease = "leaf_curl_virus"
     if disease not in allowed and disease != "healthy":
         disease = "unknown"
     sev = min(max(float(d.severity), 0.0), 1.0)

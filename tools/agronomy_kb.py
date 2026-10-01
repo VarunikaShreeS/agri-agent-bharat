@@ -14,7 +14,12 @@ def disease_keys(crop: str) -> list:
 
 
 def lookup(crop: str, disease: str) -> dict:
-    crop_k, dis_k = crop.strip().lower(), disease.strip().lower().replace(" ", "_")
+    crop_k = crop.strip().lower()
+    dis_k = disease.strip().lower().replace(" ", "_").replace("-", "_")
+    if dis_k.startswith(f"{crop_k}_"):
+        dis_k = dis_k[len(f"{crop_k}_"):]
+    if dis_k == "leaf_curl":
+        dis_k = "leaf_curl_virus"
     if crop_k not in _KB:
         return {"found": False, "error": f"Crop '{crop}' not in KB", "supported_crops": supported_crops()}
     entry = _KB[crop_k].get(dis_k)

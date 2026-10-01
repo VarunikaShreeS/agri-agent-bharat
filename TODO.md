@@ -28,13 +28,13 @@
 
 ## Phase 1 — Core agent verification (target: by 1:00 PM)
 **Spec:** Real Gemini function-calling loop works with image + text.
-- [ ] Confirm a valid `GEMINI_MODEL` for the key; set in `.env`
-- [ ] Run with a real tomato leaf photo: trace shows `analyze_leaf_image` → `lookup_remedy` → `compute_sell_plan`
-- [ ] Run with NO image: agent infers disease from text and still produces a sell plan
-- [ ] Run with bad/blurry/non-leaf image: guardrail fires, no chemical prescribed
-- [ ] Run with unknown district: agent recovers using `known_districts`
-- [ ] Fix any tool-schema or prompt issues found
-- [ ] **Accept:** 5 runs above behave as described; screenshots saved in `docs/screens/`
+- [x] Confirm a valid `GEMINI_MODEL` for the key; set in `.env`
+- [x] Run with a real tomato leaf photo: trace shows `analyze_leaf_image` → `lookup_remedy` → `compute_sell_plan`
+- [x] Run with NO image: agent infers disease from text and still produces a sell plan
+- [x] Run with bad/blurry/non-leaf image: guardrail fires, no chemical prescribed
+- [x] Run with unknown district: agent recovers using `known_districts`
+- [x] Fix any tool-schema or prompt issues found
+- [x] **Accept:** 5 runs above behave as described; screenshots saved in `docs/screens/`
 
 ## Phase 2 — Data realism (target: by 2:30 PM)
 **Spec:** Replace guesswork with real, labeled data where possible.

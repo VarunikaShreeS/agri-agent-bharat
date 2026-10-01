@@ -1,6 +1,7 @@
 """KrishiChain orchestrator: Gemini function-calling loop over real tools, with trace + guardrails."""
 import os
 from dataclasses import dataclass, field
+from dotenv import load_dotenv
 
 from google import genai
 from google.genai import types
@@ -8,7 +9,8 @@ from google.genai import types
 from tools import agronomy_kb, planner, vision
 from .tracing import Trace
 
-MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")  # set GEMINI_MODEL to whatever your AI Studio key supports
+load_dotenv()
+MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")  # default fallback
 MAX_TOOL_CALLS = 8
 
 SYSTEM = """You are KrishiChain, an autonomous agent helping a smallholder farmer in India.
@@ -37,7 +39,8 @@ class AgentResult:
     errors: list = field(default_factory=list)
 
 
-def run_agent(*, crop, district, quantity_quintals, query, language, image_bytes=None, image_mime="image/jpeg", api_key=None):
+def run_agent(*, crop, district, quantity_quintals, query, language, image_bytes=None, image_mime="image/jpeg", api_key=None, model=None):
+    active_model = model or os.getenv("GEMINI_MODEL") or MODEL
     client = genai.Client(api_key=api_key or os.getenv("GEMINI_API_KEY"))
     trace = Trace()
     art = {"diagnosis": None, "plan": None}
@@ -46,7 +49,7 @@ def run_agent(*, crop, district, quantity_quintals, query, language, image_bytes
         """Diagnose the uploaded leaf photo. Returns disease, severity (0-1), confidence (0-1) and a low_confidence flag."""
         if not image_bytes:
             return {"image_available": False, "note": "No photo uploaded; rely on the farmer's text symptoms."}
-        out = vision.diagnose(client, MODEL, image_bytes, image_mime, crop)
+        out = vision.diagnose(client, active_model, image_bytes, image_mime, crop)
         art["diagnosis"] = out
         return out
 
@@ -67,7 +70,7 @@ def run_agent(*, crop, district, quantity_quintals, query, language, image_bytes
     errors = []
     try:
         resp = client.models.generate_content(
-            model=MODEL, contents=user_msg,
+            model=active_model, contents=user_msg,
             config=types.GenerateContentConfig(
                 system_instruction=SYSTEM, tools=tools, temperature=0.2,
                 automatic_function_calling=types.AutomaticFunctionCallingConfig(maximum_remote_calls=MAX_TOOL_CALLS)))
@@ -75,4 +78,4 @@ def run_agent(*, crop, district, quantity_quintals, query, language, image_bytes
     except Exception as e:
         errors.append(f"{type(e).__name__}: {e}")
         answer = "Sorry, the advisory service hit an error. Please try again, or contact your nearest Krishi Vigyan Kendra."
-    return AgentResult(answer=answer, trace=trace.steps, diagnosis=art["diagnosis"], plan=art["plan"], errors=errors)
+    return AgentResult(answer=answer, trace=trace.steps, diagnosis=art["diagnosis"], plan=art["plan"], model=active_model, errors=errors)
