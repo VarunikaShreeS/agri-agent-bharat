@@ -4,9 +4,16 @@ from agent_engine import run_agri_agent
 
 st.set_page_config(page_title="KrishiChain Agent - Bharat Agentic 2026", layout="centered")
 
-# Sidebar for API Key input so it never fails
+# Sidebar Configuration
 st.sidebar.title("🔑 Configuration")
 api_key_input = st.sidebar.text_input("Enter OpenAI API Key", type="password", placeholder="sk-...")
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 🌐 Regional Language")
+selected_language = st.sidebar.selectbox(
+    "Choose Output Language",
+    ["English", "Hindi (हिंदी)", "Marathi (मराठी)", "Telugu (తెలుగు)", "Tamil (தமிழ்)", "Punjabi (ਪੰਜਾਬी)"]
+)
 
 st.title("🌾 KrishiChain Agent")
 st.subheader("Autonomous Crop Health & Market Linkage Engine for Bharat")
@@ -17,7 +24,7 @@ with st.form("farmer_form"):
     with col1:
         crop_name = st.text_input("Crop Name", "Tomato")
     with col2:
-        location = st.text_input("District / Location", "Nashik, Maharashtra")
+        location = st.text_input("District / State", "Nashik, Maharashtra")
         
     symptoms = st.text_area("Describe symptoms / farmer query", "Leaves are curling upwards with yellow spots and whiteflies underneath.")
     
@@ -29,11 +36,25 @@ if submitted:
     if not api_key_input:
         st.error("⚠️ Please enter your OpenAI API Key in the left sidebar first!")
     else:
-        with st.spinner("Agent is orchestrating vision analysis, agronomy tools, and mandi pricing engines..."):
+        with st.spinner("🤖 Multi-Agent Orchestrator is running tools (Vision + Mandi + Subsidy DB)..."):
             try:
-                result = run_agri_agent(crop_name, location, symptoms, uploaded_file, api_key=api_key_input)
-                st.success("Autonomous Execution Complete!")
+                log_data, result = run_agri_agent(
+                    crop_name=crop_name, 
+                    location=location, 
+                    symptoms=symptoms, 
+                    language=selected_language, 
+                    uploaded_image=uploaded_file, 
+                    api_key=api_key_input
+                )
+                
+                st.success("✨ Autonomous Execution Complete!")
+                
+                # Show Agent Tool Logs in an Expander (Pro Feature)
+                with st.expander("🔍 View Live Agent Tool Execution Logs"):
+                    st.code(log_data, language="text")
+                
                 st.markdown("### 📋 Agent Intelligence Report")
                 st.markdown(result)
+                
             except Exception as e:
                 st.error(f"Execution Error: {e}")
