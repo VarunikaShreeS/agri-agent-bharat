@@ -33,4 +33,4 @@
 
 ### [2:00 – 2:30] Demo Mode, Scalability & Conclusion
 - **Visual:** Toggling DEMO MODE in the sidebar to show offline resiliency, and showing the clean architecture.
-- **Narrator:** *"Built with Gemini 2.5 Flash, real Agmarknet data adapters, and offline fallback demo mode, KrishiChain empowers Bharat's 140 million farmers to protect their crops and maximize take-home profits. KrishiChain: Real agronomy, real numbers, real impact."*
+- **Narrator:** *"Built with Gemini 2.5 Flash, real Agmarknet data adapters, and offline fallback demo mode, KrishiChain empowers Bharat's 140 million farmers to protect their crops and maximize take-home earnings. KrishiChain: Real agronomy, real numbers, real impact."*

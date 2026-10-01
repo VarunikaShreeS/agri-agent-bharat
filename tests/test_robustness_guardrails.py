@@ -165,6 +165,39 @@ class TestRobustnessAndGuardrails(unittest.TestCase):
                     self.assertIn("बराबर", answer, f"Expected बराबर in {f.name}")
                     self.assertIn("कम जोखिम", answer, f"Expected कम जोखिम in {f.name}")
 
+    def test_direct_to_buyer_guidance_text(self):
+        """Direct-to-buyer guidance in app.py contains generic verifiable channels and verification note."""
+        app_code = (pathlib.Path(__file__).parent.parent / "app.py").read_text(encoding="utf-8")
+        self.assertIn("Ways to sell beyond the local middleman", app_code)
+        self.assertIn("e-NAM Portal", app_code)
+        self.assertIn("Farmer Producer Organizations (FPOs / FPCs)", app_code)
+        self.assertIn("Direct Sale to Processors & Retailers", app_code)
+        self.assertIn("Verify buyer terms before committing.", app_code)
+
+    def test_why_this_matters_hero_card(self):
+        """Why this matters line in app.py formats net differences and handles marginal lower risk."""
+        app_code = (pathlib.Path(__file__).parent.parent / "app.py").read_text(encoding="utf-8")
+        self.assertIn("Why this matters:</b>", app_code)
+        self.assertIn("selling locally is the lower-risk option", app_code)
+
+    def test_treatment_protocol_organic_first_dose_phi(self):
+        """Every disease in agronomy KB lists organic options first, chemical doses, and valid PHI."""
+        from tools import agronomy_kb
+        kb_path = pathlib.Path(__file__).parent.parent / "data" / "kb.json"
+        kb_data = json.loads(kb_path.read_text(encoding="utf-8"))["crops"]
+        for crop, diseases in kb_data.items():
+            for dis_key, dis_info in diseases.items():
+                self.assertIn("organic", dis_info, f"Missing organic in {crop}/{dis_key}")
+                self.assertTrue(len(dis_info["organic"]) > 0, f"Empty organic in {crop}/{dis_key}")
+                self.assertIn("chemical", dis_info, f"Missing chemical in {crop}/{dis_key}")
+                for chem in dis_info["chemical"]:
+                    self.assertIn("active", chem)
+                    self.assertIn("dose", chem)
+                    self.assertTrue(len(chem["dose"]) > 0)
+                self.assertIn("phi_days", dis_info, f"Missing phi_days in {crop}/{dis_key}")
+                self.assertIsInstance(dis_info["phi_days"], int)
+                self.assertTrue(dis_info["phi_days"] > 0)
+
 
 if __name__ == "__main__":
     unittest.main()

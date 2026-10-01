@@ -191,16 +191,19 @@ if res_data:
             pill_label = "NET GAIN ESTIMATED"
             pill_val = f"+₹{int(uplift):,} ({uplift_pct}%)"
             border_color = "#22c55e"
+            why_matters = f"<b>Why this matters:</b> Farmer net realization is ₹{int(best['net']):,} at {best['market']} versus ₹{int(local['net']):,} at local {local['market']}, delivering +₹{int(uplift):,} (+{uplift_pct}%) estimated net gain."
         elif rec == "marginal":
             hero_title = f"Roughly break-even (+{uplift_pct}%). Selling locally is lower risk. Estimated."
             pill_label = "MARGINAL RETURN"
             pill_val = f"+₹{int(uplift):,} ({uplift_pct}%)"
             border_color = "#eab308"
+            why_matters = f"<b>Why this matters:</b> Local net is ₹{int(local['net']):,} vs ₹{int(best['net']):,} at {best['market']}. The +₹{int(uplift):,} difference (+{uplift_pct}%) is within transport uncertainty; selling locally is the lower-risk option."
         else:  # sell_local
             hero_title = f"Sell at your local mandi. {best['market']} does not beat it after costs. Estimated."
             pill_label = "NET DIFFERENCE"
             pill_val = f"₹{int(uplift):,} ({uplift_pct}%)"
             border_color = "#ef4444"
+            why_matters = f"<b>Why this matters:</b> Local mandi nets ₹{int(local['net']):,} vs ₹{int(best['net']):,} at {best['market']}. Remote markets yield lower take-home pay after freight and spoilage."
 
         st.markdown(f"""
         <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%); 
@@ -213,6 +216,7 @@ if res_data:
                         Net Realization: <b>₹{int(best['net']):,}</b> at {best['market']} &nbsp;|&nbsp; Local ({local['market']}): <b>₹{int(local['net']):,}</b><br>
                         <span style="color: #94a3b8; font-size: 0.85rem;">{be_text} · price date: {p_date} ({tier})</span>
                     </p>
+                    <p style="margin-top: 8px; margin-bottom: 0; color: #cbd5e1; font-size: 0.85rem;">{why_matters}</p>
                 </div>
                 <div style="text-align: right; background: rgba(255, 255, 255, 0.05); padding: 10px 18px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1);">
                     <div style="font-size: 0.75rem; color: #94a3b8; font-weight: 600;">{pill_label}</div>
@@ -241,6 +245,17 @@ if res_data:
         st.warning("⚠️ **Low Confidence Guardrail Fired**: Photo is unclear or non-leaf. Chemical remedies have been blocked. Please consult your local KVK.")
     elif d and d.get("severity", 0) >= 0.7:
         st.warning("⚠️ **Severe Infection Alert**: Infection severity is high (≥70%). Please consult your nearest Krishi Vigyan Kendra (KVK) immediately.")
+
+    # Direct-to-buyer guidance section (travel / marginal)
+    if p and p.get("ok") and rec in ("travel", "marginal"):
+        st.markdown("#### 🤝 Ways to sell beyond the local middleman")
+        st.info("""
+        * **e-NAM Portal**: Register on the National Agriculture Market (e-NAM) for transparent online bidding across regional buyers.
+        * **Farmer Producer Organizations (FPOs / FPCs)**: Aggregate produce with your local FPO/FPC for bulk bargaining power and lower logistics cost.
+        * **Direct Sale to Processors & Retailers**: Explore direct supply contracts with registered food processors or retail chains.
+        
+        *Verify buyer terms before committing.*
+        """)
 
     # 3. SPOKEN AUDIO ADVISORY (TTS)
     st.markdown("### 🔊 Regional Audio Advisory")

@@ -45,16 +45,16 @@ def build_spoken_summary(diagnosis: dict, plan: dict, language: str = "English")
             pct = round(plan.get("uplift_pct_vs_local", 0), 2)
             
             if rec == "travel":
-                m_text = f"{best_m} சந்தையில் செலவுகளுக்குப் பிறகு உள்ளூர் சந்தையை விட சுமார் ₹{uplift:,} கூடுதலாக, தோராயமாக ₹{best_net:,} நிகர லாபம் கிடைக்கலாம். இது மதிப்பீடு மட்டுமே."
+                m_text = f"{best_m} சந்தையில் செலவுகளுக்குப் பிறகு உள்ளூர் சந்தையை விட சுமார் ₹{uplift:,} கூடுதலாக, தோராயமாக ₹{best_net:,} நிகர வருமானம் கிடைக்கலாம். இது மதிப்பீடு மட்டுமே."
             elif rec == "marginal":
                 m_text = f"{best_m} சந்தையில் விற்பது கிட்டத்தட்ட சமநிலையானது (+{pct}%). உள்ளூர் சந்தையில் விற்பது குறைந்த ஆபத்து உடையது."
             elif rec == "sell_local":
                 target_m = plan.get("local_baseline") or plan.get("best", {})
                 m_name = target_m.get("market", "")
                 net_val = int(target_m.get("net", 0))
-                m_text = f"உள்ளூர் சந்தை {m_name} உங்களுக்கு சிறந்தது, அங்கு நிகர லாபம் சுமார் ₹{net_val:,} ஆகும்."
+                m_text = f"உள்ளூர் சந்தை {m_name} உங்களுக்கு சிறந்தது, அங்கு நிகர வருமானம் சுமார் ₹{net_val:,} ஆகும்."
             else:
-                m_text = f"உள்ளூர் சந்தை {best_m} உங்களுக்கு சிறந்தது, அங்கு நிகர லாபம் சுமார் ₹{best_net:,} ஆகும்."
+                m_text = f"உள்ளூர் சந்தை {best_m} உங்களுக்கு சிறந்தது, அங்கு நிகர வருமானம் சுமார் ₹{best_net:,} ஆகும்."
         
         disclaimer = "இது மாதிரி தரவு மட்டுமே, நேரடி விலை அல்ல. " if plan and plan.get("is_synthetic") else ""
         return f"{disclaimer}{d_text} இயற்கை மற்றும் பரிந்துரைக்கப்பட்ட முறைகளை உடனடியாக பயன்படுத்தவும். {m_text} அடுத்த 3 நாட்களில் அறுவடை மற்றும் விற்பனை திட்டத்தை செயல்படுத்தவும்."

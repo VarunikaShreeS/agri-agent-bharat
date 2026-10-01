@@ -41,6 +41,6 @@ The agent autonomously orchestrates:
 ---
 
 ### 5. Measurable Bharat Impact & Feasibility
-- **Economic Uplift**: Increases farmer take-home pay by identifying optimal regional mandis (+₹394 to +₹3,182 net profit per 20 quintals tomato run).
+- **Economic Uplift**: Increases farmer take-home pay by identifying optimal regional mandis (+₹394 to +₹3,182 net realization increase per 20 quintals tomato run).
 - **Food Loss Reduction**: Perishable spoilage modeling prevents farmers from dispatching over-ripe produce to distant markets.
 - **Accessible AI**: Multi-dialect speech recognition and voice response in Hindi and Tamil democratizes AI for non-literate farmers.
