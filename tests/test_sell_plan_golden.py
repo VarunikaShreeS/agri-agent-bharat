@@ -159,6 +159,105 @@ class TestSellPlanGolden(unittest.TestCase):
         self.assertTrue(len(scanned_files) >= 10, f"Expected >=10 files scanned, got {len(scanned_files)}")
         self.assertEqual(hits, [], f"Found stale 34.8 in {hits}")
 
+    def test_t1_to_iso_parsing(self):
+        """T1: _to_iso correctly parses YYYY-MM-DD, DD/MM/YYYY, DD-MM-YYYY and returns None for invalid."""
+        valid_cases = [
+            ("2026-09-24", "2026-09-24"),
+            ("24/09/2026", "2026-09-24"),
+            ("24-09-2026", "2026-09-24")
+        ]
+        for raw, exp in valid_cases:
+            with self.subTest(raw=raw):
+                self.assertEqual(mandi._to_iso(raw), exp)
+
+        invalid_cases = ["garbage", "", None, 12345]
+        for raw in invalid_cases:
+            with self.subTest(raw=raw):
+                self.assertIsNone(mandi._to_iso(raw))
+
+    def test_t2_history_month_boundary_sorting(self):
+        """T2: Dates across month boundary in DD/MM/YYYY format sort chronologically."""
+        raw_dates = ["30/09/2026", "01/10/2026", "02/10/2026"]
+        iso_dates = [mandi._to_iso(d) for d in raw_dates]
+        sorted_iso = sorted(iso_dates)
+        self.assertEqual(sorted_iso, ["2026-09-30", "2026-10-01", "2026-10-02"])
+        # First vs last calculation
+        prices = [1000.0, 1100.0, 1200.0]
+        t_pct = optimizer.trend_pct(prices)
+        self.assertEqual(t_pct, 20.0)
+
+    def test_t3_trend_span_days_calendar(self):
+        """T3: trend_span_days equals real calendar span; 2-day history gives span 1."""
+        d1 = mandi._to_iso("30/09/2026")
+        d2 = mandi._to_iso("01/10/2026")
+        import datetime
+        span = (datetime.date.fromisoformat(d2) - datetime.date.fromisoformat(d1)).days
+        self.assertEqual(span, 1)
+
+    def test_t4_timing_advice_dynamic_span_no_hardcoded_7_days(self):
+        """T4: timing_advice contains the span number and not the hardcoded substring '7 days'."""
+        adv1 = optimizer.timing_advice(severity=0.2, best_trend_pct=15.0, trend_span_days=3)
+        self.assertIn("over 3 days", adv1["reason"])
+        self.assertNotIn("7 days", adv1["reason"])
+
+        adv2 = optimizer.timing_advice(severity=0.2, best_trend_pct=None)
+        self.assertNotIn("7 days", adv2["reason"])
+
+    def test_t5_seeded_plan_synthetic_flag_and_none_price_date(self):
+        """T5: Seeded plan has is_synthetic=True, best.price_date=None, and no today's ISO date."""
+        import datetime
+        today_iso = datetime.date.today().isoformat()
+        rows = mandi.SeededSnapshotAdapter.fetch_rows("Tomato")
+        with patch.object(mandi, "get_market_rows", return_value=rows):
+            plan = planner.build_sell_plan("Tomato", 20.0, "Nashik, Maharashtra", 0.2)
+            self.assertTrue(plan["ok"])
+            self.assertTrue(plan["is_synthetic"])
+            self.assertIsNone(plan["best"]["price_date"])
+            self.assertIsNone(plan["price_date"])
+            # Ensure no today's date in price_date fields
+            self.assertNotEqual(plan.get("price_date"), today_iso)
+            self.assertNotEqual(plan["best"].get("price_date"), today_iso)
+
+    def test_t6_real_frozen_plan_is_synthetic_false_g1_unchanged(self):
+        """T6: Real frozen plan has is_synthetic=False and G1 verified numbers remain unchanged."""
+        plan = planner.build_sell_plan("Tomato", 20.0, "Nashik, Maharashtra", 0.2)
+        self.assertTrue(plan["ok"])
+        self.assertFalse(plan["is_synthetic"])
+        self.assertEqual(plan["local_baseline"]["net"], 40860.0)
+        self.assertEqual(plan["best"]["net"], 41254.0)
+        self.assertEqual(plan["uplift_inr_vs_local"], 394.0)
+        self.assertEqual(round(plan["uplift_pct_vs_local"], 2), 0.96)
+        self.assertEqual(plan["recommendation"], "marginal")
+
+    def test_t7_app_source_contains_exact_synthetic_banner(self):
+        """T7: app.py source code contains exact sample data warning banner string."""
+        app_file = pathlib.Path(__file__).parent.parent / "app.py"
+        content = app_file.read_text(encoding="utf-8")
+        banner = "Sample data - not live market prices. Do not use for a real selling decision."
+        self.assertIn(banner, content)
+
+    def test_t8_no_trend_7d_pct_in_app_agent_tools(self):
+        """T8: No un-aliased 'trend_7d_pct' left anywhere in app.py, agent/, tools/."""
+        repo_root = pathlib.Path(__file__).parent.parent
+        scan_targets = [
+            repo_root / "app.py",
+            repo_root / "agent",
+            repo_root / "tools"
+        ]
+        hits = []
+        for target in scan_targets:
+            if target.is_file():
+                content = target.read_text(encoding="utf-8", errors="ignore")
+                if "trend_7d_pct" in content:
+                    hits.append(str(target))
+            elif target.is_dir():
+                for f in target.rglob("*"):
+                    if f.is_file() and not f.name.endswith(".pyc"):
+                        content = f.read_text(encoding="utf-8", errors="ignore")
+                        if "trend_7d_pct" in content:
+                            hits.append(str(f))
+        self.assertEqual(hits, [], f"Found residual trend_7d_pct in: {hits}")
+
 
 if __name__ == "__main__":
     unittest.main()

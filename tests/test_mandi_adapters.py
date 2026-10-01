@@ -81,7 +81,7 @@ class TestMandiAdapters(unittest.TestCase):
         # Test timing advice with None trend
         t1 = optimizer.timing_advice(severity=0.2, best_trend_pct=None)
         self.assertEqual(t1["action"], "sell_at_best_market")
-        self.assertIn("No 7-day price trend", t1["reason"])
+        self.assertIn("No multi-day price trend", t1["reason"])
 
         # High severity always sells now
         t2 = optimizer.timing_advice(severity=0.8, best_trend_pct=None)

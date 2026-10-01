@@ -81,14 +81,17 @@ def build_sell_plan(crop: str, quantity_quintals: float, home_district: str, sev
         if km > MAX_RADIUS_KM:
             continue
         money = optimizer.net_realization(crop, r["modal_price"], quantity_quintals, km)
-        p_date = r.get("price_date") or r.get("as_of", "")
+        p_date = r.get("price_date") or r.get("as_of")
         tier = r.get("data_tier") or r.get("source", "")
+        span_days = r.get("trend_span_days")
         all_options.append({
             "market": r["market"], "district": r["district"], "state": r["state"],
             "distance_km": km, "price_per_quintal": r["modal_price"],
-            "trend_7d_pct": optimizer.trend_pct(r.get("history_7d")),
+            "trend_pct": optimizer.trend_pct(r.get("history_7d"), span_days),
+            "trend_span_days": span_days,
             "source": tier, "data_tier": tier,
             "as_of": p_date, "price_date": p_date,
+            "is_synthetic": r.get("is_synthetic", False),
             **money
         })
 
@@ -97,18 +100,28 @@ def build_sell_plan(crop: str, quantity_quintals: float, home_district: str, sev
 
     # Local baseline is the closest market
     local = min(all_options, key=lambda o: o["distance_km"])
-    local_dt = _parse_date(local["price_date"])
+    local_p_date = local["price_date"]
+    local_dt = _parse_date(local_p_date) if local_p_date else None
 
-    # Exclude stale markets with price_date gap > MAX_PRICE_DATE_GAP_DAYS vs local baseline
+    # Exclude stale markets
     valid_options = []
     excluded_stale = []
     for opt in all_options:
-        opt_dt = _parse_date(opt["price_date"])
-        gap_days = abs((opt_dt - local_dt).days)
-        if gap_days <= logistics.MAX_PRICE_DATE_GAP_DAYS:
+        opt_p_date = opt["price_date"]
+        # Case A: Both dates are None (synthetic data) -> skip date comparison, keep valid
+        if local_p_date is None and opt_p_date is None:
             valid_options.append(opt)
+        # Case B: Incomparable dates (one is None and the other is real)
+        elif (local_p_date is None and opt_p_date is not None) or (local_p_date is not None and opt_p_date is None):
+            excluded_stale.append({"market": opt["market"], "price_date": opt_p_date, "reason": "no_comparable_date"})
+        # Case C: Real dates -> check date gap
         else:
-            excluded_stale.append({"market": opt["market"], "price_date": opt["price_date"]})
+            opt_dt = _parse_date(opt_p_date)
+            gap_days = abs((opt_dt - local_dt).days)
+            if gap_days <= logistics.MAX_PRICE_DATE_GAP_DAYS:
+                valid_options.append(opt)
+            else:
+                excluded_stale.append({"market": opt["market"], "price_date": opt_p_date, "reason": f"gap_{gap_days}d_exceeds_max"})
 
     # Rank options
     valid_options.sort(key=lambda o: o["net"], reverse=True)
@@ -130,6 +143,8 @@ def build_sell_plan(crop: str, quantity_quintals: float, home_district: str, sev
     else:
         break_even_freight = None
 
+    is_synthetic = any(opt.get("is_synthetic", False) for opt in valid_options)
+
     return {
         "ok": True,
         "crop": crop,
@@ -144,7 +159,8 @@ def build_sell_plan(crop: str, quantity_quintals: float, home_district: str, sev
         "recommendation": recommendation,
         "break_even_freight_inr_per_qtl_km": break_even_freight,
         "sensitivity": sensitivity,
-        "timing": optimizer.timing_advice(severity, best["trend_7d_pct"]),
+        "timing": optimizer.timing_advice(severity, best.get("trend_pct"), best.get("trend_span_days")),
+        "is_synthetic": is_synthetic,
         "assumptions": {
             "severity": severity,
             "severity_in_net": False,

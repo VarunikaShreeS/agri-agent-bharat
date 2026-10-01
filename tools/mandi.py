@@ -22,6 +22,23 @@ if _COORDS_FILE.exists():
 _LAST_PROVIDER_LOG: List[Dict[str, Any]] = []
 
 
+def _to_iso(s: Any) -> Optional[str]:
+    """Parse date string in YYYY-MM-DD, DD/MM/YYYY, or DD-MM-YYYY format and return ISO YYYY-MM-DD or None."""
+    if not s or not isinstance(s, (str, bytes)):
+        return None
+    s_clean = s.strip() if isinstance(s, str) else s.decode("utf-8", errors="ignore").strip()
+    if not s_clean:
+        return None
+    import datetime
+    for fmt in ("%Y-%m-%d", "%d/%m/%Y", "%d-%m-%Y"):
+        try:
+            dt = datetime.datetime.strptime(s_clean, fmt).date()
+            return dt.isoformat()
+        except Exception:
+            continue
+    return None
+
+
 def get_district_coord(state: str, district: str) -> Optional[Dict[str, float]]:
     """Look up approximate centroid for a district within a state or across states."""
     st_map = _COORDS.get(state, {})
@@ -57,24 +74,31 @@ class MandiApiAdapter:
                     if not data:
                         raise ValueError("Empty data returned")
                     
-                    # 1. Group records by (district, market)
+                    dropped_bad_date = 0
                     grouped = {}
-                    max_date = "1970-01-01"
+                    max_iso = "1970-01-01"
+                    
                     for r in data:
                         dist = (r.get("district") or "").strip()
                         m_name = (r.get("market") or "").strip()
-                        arr = r.get("arrival_date", "")
+                        raw_arr = r.get("arrival_date")
                         modal = r.get("modal_price")
-                        if not dist or not m_name or modal is None or not arr:
+                        if not dist or not m_name or modal is None:
                             continue
-                        if arr > max_date:
-                            max_date = arr
-                        grouped.setdefault((dist, m_name), []).append(r)
+                        
+                        iso_arr = _to_iso(raw_arr)
+                        if not iso_arr:
+                            dropped_bad_date += 1
+                            continue
+                        
+                        if iso_arr > max_iso:
+                            max_iso = iso_arr
+                        try:
+                            grouped.setdefault((dist, m_name), []).append((iso_arr, float(modal)))
+                        except Exception:
+                            continue
 
-                    try:
-                        max_dt = datetime.datetime.strptime(max_date, "%Y-%m-%d")
-                    except Exception:
-                        max_dt = datetime.datetime.now()
+                    max_dt = datetime.date.fromisoformat(max_iso) if max_iso != "1970-01-01" else datetime.date.today()
 
                     rows = []
                     for (dist, m_name), group in grouped.items():
@@ -82,31 +106,29 @@ class MandiApiAdapter:
                         if not coord:
                             continue
 
-                        # Group prices by date
+                        # Group prices by ISO date
                         by_date = {}
-                        for r in group:
-                            arr = r.get("arrival_date", "")
-                            try:
-                                by_date.setdefault(arr, []).append(float(r.get("modal_price")))
-                            except Exception:
-                                continue
+                        for iso_d, price in group:
+                            by_date.setdefault(iso_d, []).append(price)
+
                         if not by_date:
                             continue
 
-                        sorted_dates = sorted(by_date.keys())
-                        latest_date = sorted_dates[-1]
+                        # Sort chronologically by parsed date
+                        sorted_iso_dates = sorted(by_date.keys())
+                        latest_iso = sorted_iso_dates[-1]
 
                         # Exclude stale rows older than 3 days vs dataset max date
-                        try:
-                            latest_dt = datetime.datetime.strptime(latest_date, "%Y-%m-%d")
-                            if (max_dt - latest_dt).days > 3:
-                                continue
-                        except Exception:
-                            pass
+                        latest_dt = datetime.date.fromisoformat(latest_iso)
+                        if (max_dt - latest_dt).days > 3:
+                            continue
 
-                        latest_prices = by_date[latest_date]
+                        latest_prices = by_date[latest_iso]
                         avg_modal = round(sum(latest_prices) / len(latest_prices), 0)
-                        history = [round(sum(by_date[d]) / len(by_date[d]), 0) for d in sorted_dates]
+                        history = [round(sum(by_date[d]) / len(by_date[d]), 0) for d in sorted_iso_dates]
+                        
+                        first_dt = datetime.date.fromisoformat(sorted_iso_dates[0])
+                        span_days = (latest_dt - first_dt).days
 
                         rows.append({
                             "market": m_name,
@@ -116,8 +138,12 @@ class MandiApiAdapter:
                             "lon": coord["lon"],
                             "modal_price": float(avg_modal),
                             "history_7d": history if len(history) > 1 else None,
+                            "trend_span_days": span_days if len(history) > 1 else None,
                             "source": cls.NAME,
-                            "as_of": latest_date
+                            "data_tier": cls.NAME,
+                            "as_of": latest_iso,
+                            "price_date": latest_iso,
+                            "is_synthetic": False
                         })
 
                     if rows:
@@ -156,7 +182,7 @@ class DataGovAdapter:
                         dist = r.get("district", "")
                         m_name = r.get("market", "")
                         modal = r.get("modal_price")
-                        arrival = r.get("arrival_date", time.strftime("%Y-%m-%d"))
+                        arrival = _to_iso(r.get("arrival_date")) or time.strftime("%Y-%m-%d")
                         if not dist or not m_name or not modal:
                             continue
                         coord = get_district_coord(st, dist)
@@ -170,8 +196,12 @@ class DataGovAdapter:
                             "lon": coord["lon"],
                             "modal_price": float(modal),
                             "history_7d": None,
+                            "trend_span_days": None,
                             "source": cls.NAME,
-                            "as_of": arrival
+                            "data_tier": cls.NAME,
+                            "as_of": arrival,
+                            "price_date": arrival,
+                            "is_synthetic": False
                         })
                     if rows:
                         return rows
@@ -204,6 +234,8 @@ class FrozenRealAdapter:
             if hist:
                 modal = hist[-1] if isinstance(hist, list) else hist
                 history_7d = hist if (isinstance(hist, list) and len(hist) > 1) else None
+                m_date = m.get("arrival_dates", {}).get(crop.title(), as_of)
+                iso_date = _to_iso(m_date) or as_of
                 rows.append({
                     "market": m["market"],
                     "district": m["district"],
@@ -212,8 +244,12 @@ class FrozenRealAdapter:
                     "lon": m["lon"],
                     "modal_price": float(modal),
                     "history_7d": history_7d,
+                    "trend_span_days": len(history_7d) - 1 if history_7d else None,
                     "source": cls.NAME,
-                    "as_of": m.get("arrival_dates", {}).get(crop.title(), as_of)
+                    "data_tier": cls.NAME,
+                    "as_of": iso_date,
+                    "price_date": iso_date,
+                    "is_synthetic": False
                 })
         if not rows:
             raise ValueError(f"No frozen real data for crop {crop}")
@@ -232,7 +268,6 @@ class SeededSnapshotAdapter:
         if not seed_file.exists():
             raise FileNotFoundError("No seed snapshot file found")
         data = json.loads(seed_file.read_text(encoding="utf-8"))
-        as_of = data.get("as_of", "2026-10-01")
         rows = []
         for m in data.get("markets", []):
             prices = m.get("prices", {})
@@ -248,8 +283,12 @@ class SeededSnapshotAdapter:
                     "lon": m["lon"],
                     "modal_price": float(modal),
                     "history_7d": history_7d,
+                    "trend_span_days": 7 if (isinstance(hist, list) and len(hist) > 1) else None,
                     "source": cls.NAME,
-                    "as_of": as_of
+                    "data_tier": cls.NAME,
+                    "as_of": None,
+                    "price_date": None,
+                    "is_synthetic": True
                 })
         if not rows:
             raise ValueError(f"No seed data for crop {crop}")

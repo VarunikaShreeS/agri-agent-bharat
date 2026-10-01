@@ -160,16 +160,22 @@ if res_data:
 
     # 1. HERO METRIC CARD
     if p and p.get("ok"):
+        is_synthetic = p.get("is_synthetic", False)
+        if is_synthetic:
+            st.warning("⚠️ **Sample data - not live market prices. Do not use for a real selling decision.**")
+
         best = p["best"]
         local = p["local_baseline"]
         uplift = p["uplift_inr_vs_local"]
         uplift_pct = p["uplift_pct_vs_local"]
         tier = p.get("data_tier") or p.get("data_source", "frozen_real")
-        p_date = p.get("price_date") or p.get("data_as_of", "recent")
+        p_date = "n/a (sample)" if is_synthetic else (p.get("price_date") or p.get("data_as_of", "recent"))
         rec = p.get("recommendation", "marginal")
         be_freight = p.get("break_even_freight_inr_per_qtl_km")
 
-        if tier == "live_mandi_api":
+        if is_synthetic or tier == "seeded_snapshot":
+            badge_str = "🟡 SEED (sample data)"
+        elif tier == "live_mandi_api":
             badge_str = f"🟢 LIVE (Mandi Price API, {p_date})"
         elif tier == "live_agmarknet":
             badge_str = f"🟢 LIVE (data.gov.in, {p_date})"
@@ -205,7 +211,7 @@ if res_data:
                     <h3 style="margin: 6px 0; color: #ffffff; font-size: 1.3rem; line-height: 1.4;">{hero_title}</h3>
                     <p style="margin: 0; color: #cbd5e1; font-size: 0.9rem;">
                         Net Realization: <b>₹{int(best['net']):,}</b> at {best['market']} &nbsp;|&nbsp; Local ({local['market']}): <b>₹{int(local['net']):,}</b><br>
-                        <span style="color: #94a3b8; font-size: 0.85rem;">{be_text} · Price Date: {p_date} ({tier})</span>
+                        <span style="color: #94a3b8; font-size: 0.85rem;">{be_text} · price date: {p_date} ({tier})</span>
                     </p>
                 </div>
                 <div style="text-align: right; background: rgba(255, 255, 255, 0.05); padding: 10px 18px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1);">
