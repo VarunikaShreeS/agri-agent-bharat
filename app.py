@@ -4,9 +4,10 @@ from agent_engine import run_agri_agent
 
 st.set_page_config(page_title="KrishiChain Agent - Bharat Agentic 2026", layout="centered")
 
-# Sidebar Configuration
+# Sidebar Configuration for Gemini API Key
 st.sidebar.title("🔑 Configuration")
-api_key_input = st.sidebar.text_input("Enter OpenAI API Key", type="password", placeholder="sk-...")
+api_key_input = st.sidebar.text_input("Enter Google Gemini API Key", type="password", placeholder="AIzaSy...")
+st.sidebar.markdown("[Get a free Gemini API Key here](https://aistudio.google.com/app/apikey)")
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🌐 Regional Language")
@@ -34,9 +35,9 @@ with st.form("farmer_form"):
 
 if submitted:
     if not api_key_input:
-        st.error("⚠️ Please enter your OpenAI API Key in the left sidebar first!")
+        st.error("⚠️ Please enter your Google Gemini API Key in the left sidebar first!")
     else:
-        with st.spinner("🤖 Multi-Agent Orchestrator is running tools (Vision + Mandi + Subsidy DB)..."):
+        with st.spinner("🤖 Gemini Multi-Agent Orchestrator is running tools..."):
             try:
                 log_data, result = run_agri_agent(
                     crop_name=crop_name, 
@@ -49,7 +50,6 @@ if submitted:
                 
                 st.success("✨ Autonomous Execution Complete!")
                 
-                # Show Agent Tool Logs in an Expander (Pro Feature)
                 with st.expander("🔍 View Live Agent Tool Execution Logs"):
                     st.code(log_data, language="text")
                 
