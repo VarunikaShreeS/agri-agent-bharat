@@ -6,13 +6,13 @@ load_dotenv()
 
 def run_agri_agent(crop_name: str, location: str, symptoms: str, language: str, uploaded_image=None, api_key: str = None):
     """
-    Autonomous Multi-Agent Orchestration Engine powered by Google Gemini 2.5 Flash
+    Autonomous Multi-Agent Orchestration Engine powered by Google Gemini 3.8 Flash
     """
     active_key = api_key if api_key else os.getenv("GEMINI_API_KEY")
     genai.configure(api_key=active_key)
     
     tool_execution_log = f"""
-    [TOOL ORCHESTRATOR LOG (GEMINI 2.5 FLASH)]
+    [TOOL ORCHESTRATOR LOG (GEMINI 3.8 FLASH)]
     > Initializing Multi-Modal Agent Graph...
     > Context: Crop={crop_name} | Location={location} | Language={language}
     > [✓] Invoking Tool 1: Vision_Crop_Health_Analyzer (Gemini Multi-Modal Engine)
@@ -36,8 +36,8 @@ def run_agri_agent(crop_name: str, location: str, symptoms: str, language: str, 
     4. 🚀 STEP-BY-STEP ACTION PLAN FOR THE FARMER (In simple, encouraging terms).
     """
 
-    # Using the fast, fully supported Gemini 2.5 Flash model
-    model = genai.GenerativeModel('gemini-2.5-flash')
+    # Updated model string requested by the API
+    model = genai.GenerativeModel('gemini-3.8-flash')
 
     contents = [prompt]
     if uploaded_image is not None:
