@@ -48,35 +48,78 @@ class MandiApiAdapter:
 
     @classmethod
     def fetch_rows(cls, crop: str, state: str = "Maharashtra", timeout: float = 8.0) -> List[Dict[str, Any]]:
-        # Attempt request with 1 retry
+        import datetime
         for attempt in range(2):
             try:
                 resp = requests.get(cls.URL, params={"state": state, "commodity": crop.title()}, timeout=timeout)
                 if resp.status_code == 200:
                     data = resp.json().get("data", [])
-                    rows = []
+                    if not data:
+                        raise ValueError("Empty data returned")
+                    
+                    # 1. Group records by (district, market)
+                    grouped = {}
+                    max_date = "1970-01-01"
                     for r in data:
                         dist = (r.get("district") or "").strip()
                         m_name = (r.get("market") or "").strip()
+                        arr = r.get("arrival_date", "")
                         modal = r.get("modal_price")
-                        arrival = r.get("arrival_date", time.strftime("%Y-%m-%d"))
-                        if not dist or not m_name or modal is None:
+                        if not dist or not m_name or modal is None or not arr:
                             continue
+                        if arr > max_date:
+                            max_date = arr
+                        grouped.setdefault((dist, m_name), []).append(r)
+
+                    try:
+                        max_dt = datetime.datetime.strptime(max_date, "%Y-%m-%d")
+                    except Exception:
+                        max_dt = datetime.datetime.now()
+
+                    rows = []
+                    for (dist, m_name), group in grouped.items():
                         coord = get_district_coord(state, dist)
                         if not coord:
-                            # Skip unplaceable rows rather than guessing
                             continue
+
+                        # Group prices by date
+                        by_date = {}
+                        for r in group:
+                            arr = r.get("arrival_date", "")
+                            try:
+                                by_date.setdefault(arr, []).append(float(r.get("modal_price")))
+                            except Exception:
+                                continue
+                        if not by_date:
+                            continue
+
+                        sorted_dates = sorted(by_date.keys())
+                        latest_date = sorted_dates[-1]
+
+                        # Exclude stale rows older than 3 days vs dataset max date
+                        try:
+                            latest_dt = datetime.datetime.strptime(latest_date, "%Y-%m-%d")
+                            if (max_dt - latest_dt).days > 3:
+                                continue
+                        except Exception:
+                            pass
+
+                        latest_prices = by_date[latest_date]
+                        avg_modal = round(sum(latest_prices) / len(latest_prices), 0)
+                        history = [round(sum(by_date[d]) / len(by_date[d]), 0) for d in sorted_dates]
+
                         rows.append({
                             "market": m_name,
                             "district": dist,
                             "state": state,
                             "lat": coord["lat"],
                             "lon": coord["lon"],
-                            "modal_price": float(modal),
-                            "history_7d": None,  # Mandi API prices endpoint does not provide individual market history
+                            "modal_price": float(avg_modal),
+                            "history_7d": history if len(history) > 1 else None,
                             "source": cls.NAME,
-                            "as_of": arrival
+                            "as_of": latest_date
                         })
+
                     if rows:
                         return rows
                 elif resp.status_code in (502, 503, 504, 429) and attempt == 0:

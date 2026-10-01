@@ -1,0 +1,46 @@
+graph TD
+    User["👨‍🌾 Farmer (English / Hindi / Tamil)"] -->|Photo / Audio / Text| UI["🌾 Streamlit UI / Web App"]
+    
+    subgraph Input_Processing["Input & Perception"]
+        UI -->|Audio Clip| Transcribe["🎙️ Gemini 2.5 Audio Transcription"]
+        Transcribe -->|Transcribed Text| Query["User Query Text"]
+        UI -->|Leaf Image| ImgBytes["Uploaded Leaf Image"]
+    end
+    
+    subgraph Orchestrator_Loop["Autonomous Gemini 2.5 Function Calling Loop"]
+        Query --> Orchestrator["🧠 Agent Orchestrator (gemini-2.5-flash)"]
+        ImgBytes --> Orchestrator
+        
+        Orchestrator <-->|1. Leaf Photo| Tool1["🔬 Tool 1: Vision Pathologist (tools.vision)"]
+        Orchestrator <-->|2. Disease Key| Tool2["📚 Tool 2: Agronomy KB (tools.agronomy_kb)"]
+        Orchestrator <-->|3. Qty, Home, Severity| Tool3["💰 Tool 3: Mandi & Logistics Planner (tools.planner)"]
+    end
+
+    subgraph Deterministic_Data_Engine["Deterministic Backend (No Hallucinations)"]
+        Tool2 --> KB_JSON[("data/kb.json (TNAU / ICAR)")]
+        
+        Tool3 --> ProviderChain["Provider Chain (tools.mandi)"]
+        ProviderChain --> LiveAPI["🟢 Mandi Price API (Live REST)"]
+        ProviderChain --> DataGov["🟢 data.gov.in (Agmarknet)"]
+        ProviderChain --> FrozenReal[("🔵 data/mandi_snapshot_frozen.json")]
+        ProviderChain --> SeedSnapshot[("🟡 data/mandi_snapshot_seed.json")]
+        
+        Tool3 --> Centroids[("data/district_coords.json (36 MH + 12 TN)")]
+        Tool3 --> Optimizer["📐 Net Realization Optimizer (tools.optimizer)"]
+        Optimizer --> CostModel["Freight (₹2/qtl/km) + Comm (2%) + Loading (₹15/qtl) + Spoilage"]
+    end
+
+    subgraph Safety_Output["Safety Guardrails & Multilingual Voice Synthesis"]
+        Orchestrator --> Guardrail["🛡️ Safety & Grounding Guardrails (agent.guardrails)"]
+        Guardrail -->|Confidence < 60%| BlockChem["🚫 Block Chemicals & Refer to KVK"]
+        Guardrail -->|Severity >= 70%| KVKAdvisory["🚨 Mandate KVK Field Visit"]
+        Guardrail -->|Numeric Check| Verifier["🔍 Exact Tool Price Verifier"]
+        
+        Orchestrator --> TTS["🔊 Spoken Audio Synthesis (voice.tts)"]
+        TTS --> AudioPlayer["🎧 Regional Audio Playback (en/hi/ta)"]
+        Orchestrator --> HeroCard["🏆 Hero Metric Card (+₹ Uplift vs Local)"]
+    end
+
+    HeroCard --> UI
+    AudioPlayer --> UI
+    Verifier --> UI

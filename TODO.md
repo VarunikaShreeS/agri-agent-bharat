@@ -12,11 +12,11 @@
 6. Small commits with clear messages. Never commit `.env` or API keys.
 
 ## Success metrics to demonstrate (shown in demo + README)
-- [ ] Real tool-call trace visible in UI (>= 3 distinct tools per run)
-- [ ] Net-rupee uplift vs local mandi computed per run
-- [ ] Low-confidence guardrail triggers on a bad photo
-- [ ] Works end-to-end in English, Hindi, Tamil (text + audio)
-- [ ] Offline tests pass; README has architecture diagram and honest limitations
+- [x] Real tool-call trace visible in UI (>= 3 distinct tools per run)
+- [x] Net-rupee uplift vs local mandi computed per run
+- [x] Low-confidence guardrail triggers on a bad photo
+- [x] Works end-to-end in English, Hindi, Tamil (text + audio)
+- [x] Offline tests pass; README has architecture diagram and honest limitations
 
 ---
 ## Phase 0 — Setup & merge (target: by 11:30)
@@ -46,39 +46,39 @@
 
 ## Phase 3 — Voice & multilingual (target: by 4:00 PM, MIDPOINT)
 **Spec:** Farmer can speak or type in a regional language and hear the answer.
-- [ ] Voice input: browser/mic audio → Gemini transcription → `query` text (English, Hindi, Tamil)
-- [ ] TTS output of the advisory (e.g., gTTS or equivalent) for hi/ta/en; remove any placeholder audio
-- [ ] Final advisory fully in selected language; numbers/units stay correct
-- [ ] **Accept (midpoint demo):** photo + Tamil voice query → Tamil text + audio advisory with trace and net-rupee uplift
+- [x] Voice input: browser/mic audio → Gemini transcription → `query` text (English, Hindi, Tamil)
+- [x] TTS output of the advisory (e.g., gTTS or equivalent) for hi/ta/en; remove any placeholder audio
+- [x] Final advisory fully in selected language; numbers/units stay correct
+- [x] **Accept (midpoint demo):** photo + Tamil voice query → Tamil text + audio advisory with trace and net-rupee uplift
 
 ## Phase 4 — Robustness & guardrails (target: by 5:30 PM)
 **Spec:** Demo cannot crash; unsafe advice is blocked.
-- [ ] Timeouts + one retry on Gemini and mandi calls; friendly error messages
-- [ ] Cached-demo mode (`DEMO_MODE=1`) that replays a stored successful run if the network/API fails
-- [ ] Chemical safety: organic first, pre-harvest interval always shown, severity >= 0.7 adds "visit KVK"
-- [ ] Add tests for guardrail thresholds and planner edge cases
-- [ ] **Accept:** all tests pass; demo-mode works with network off
+- [x] Timeouts + one retry on Gemini and mandi calls; friendly error messages
+- [x] Cached-demo mode (`DEMO_MODE=1`) that replays a stored successful run if the network/API fails
+- [x] Chemical safety: organic first, pre-harvest interval always shown, severity >= 0.7 adds "visit KVK"
+- [x] Add tests for guardrail thresholds and planner edge cases
+- [x] **Accept:** all tests pass; demo-mode works with network off
 
 ## Phase 5 — UX polish (target: by 6:30 PM)
 **Spec:** A first-time judge understands value in 10 seconds.
-- [ ] Clear hero metric card ("Sell at X: +₹Y vs local mandi")
-- [ ] Mobile-friendly layout, large fonts, minimal inputs, sample-case button for the demo
-- [ ] Trace panel readable (tool name, purpose, latency, status)
-- [ ] **Accept:** run the full flow on a phone-sized browser window
+- [x] Clear hero metric card ("Sell at X: +₹Y vs local mandi")
+- [x] Mobile-friendly layout, large fonts, minimal inputs, sample-case button for the demo
+- [x] Trace panel readable (tool name, purpose, latency, status)
+- [x] **Accept:** run the full flow on a phone-sized browser window
 
 ## Phase 6 — Submission assets (target: by 8:00 PM)
 **Spec:** Everything the email lists, ready to upload.
-- [ ] README: problem, solution, architecture diagram, tech stack, setup, honest limitations, data sources
-- [ ] Agent workflow/architecture diagram (PNG or Mermaid) in `docs/`
-- [ ] 5-slide deck: Problem · Solution & Agent Flow · Architecture · Demo/Impact metrics · Scalability & Roadmap
-- [ ] 2-3 minute demo video (use demo-mode-safe path), farmer-first story
-- [ ] Working demo link (Streamlit Community Cloud or similar) + repo public, no secrets
-- [ ] Submission fields: project name, team members, domain, problem statement, solution overview, workflow, tech stack, repo, demo, video, deck
+- [x] README: problem, solution, architecture diagram, tech stack, setup, honest limitations, data sources
+- [x] Agent workflow/architecture diagram (PNG or Mermaid) in `docs/`
+- [x] 5-slide deck: Problem · Solution & Agent Flow · Architecture · Demo/Impact metrics · Scalability & Roadmap
+- [x] 2-3 minute demo video (use demo-mode-safe path), farmer-first story
+- [x] Working demo link (Streamlit Community Cloud or similar) + repo public, no secrets
+- [x] Submission fields: project name, team members, domain, problem statement, solution overview, workflow, tech stack, repo, demo, video, deck
 
 ## Phase 7 — Submit (8:00 – 9:00 PM)
-- [ ] Dry-run the demo once more on the deployed link
-- [ ] Submit through the official portal by 8:30 PM (buffer), save confirmation email
-- [ ] Final tag: `git tag v1-submission`
+- [x] Dry-run the demo once more on the deployed link
+- [x] Submit through the official portal by 8:30 PM (buffer), save confirmation email
+- [x] Final tag: `git tag v1-submission`
 
 ## Scalability roadmap (for the deck, not for building today)
 More crops/diseases via KB expansion · state-specific mandi coverage · FPO/buyer network integration · WhatsApp/IVR channel for feature phones · KVK expert-in-the-loop escalation · offline-first lite mode
